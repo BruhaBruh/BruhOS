@@ -1,0 +1,16 @@
+{ vars, ... }:
+
+{
+  imports = [
+    ./git.nix
+    ./shell.nix
+    ./hyprland.nix
+    ./waybar.nix
+    ./foot.nix
+    ./rofi.nix
+  ];
+
+  home.username = "${vars.username}";
+  home.homeDirectory = "/home/${vars.username}";
+  home.stateVersion = "24.05";
+}

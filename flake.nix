@@ -11,51 +11,59 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
-    distro-grub-themes.url = "github:AdisonCavani/distro-grub-themes";
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }@inputs: 
-    let 
-      system = "x86_64-linux";
+  let
+    lib = nixpkgs.lib;
+    system = "x86_64-linux";
 
+    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs-stable = nixpkgs-stable.legacyPackages.${system};
+
+    vars = {
       flakeDirectory = "$HOME/.dotfiles";
-
-      host = "nixos";
+      hostName = "nixos";
       username = "bruhabruh";
 
-      gitUsername = "BruhaBruh";
-      gitEmail = "drugsho.jaker@gmail.com";
+      timeZone = "Asia/Yekaterinburg";
 
-      extraMonitorSettings = "";
+      locale = {
+        default = "en_US.UTF-8";
+        extra = "ru_RU.UTF-8";
+        supported = [
+          "en_US.UTF-8/UTF-8"
+          "ru_RU.UTF-8/UTF-8"
+        ];
+      };
 
-      clock24h = true;
-
-      browser = "firefox";
-      terminal = "foot";
-      keyboardLayout = "us";
-    in {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      git = {
+        username = "BruhaBruh";
+        email = "drugsho.jaker@gmail.com";
+        defaultBranch = "main";
+      };
+    };
+  in {
+    nixosConfigurations.nixos = lib.nixosSystem {
+      inherit system;
       modules = [
-        ./nixos/configuration.nix
-        inputs.distro-grub-themes.nixosModules.${system}.default
+        ./system
       ];
       specialArgs = {
-        inherit inputs system flakeDirectory host username gitUsername gitEmail extraMonitorSettings clock24h browser terminal keyboardLayout;
-        pkgs = import nixpkgs {
-          inherit system inputs;
-          config.allowUnfree = true;
-        };
-        pkgs-stable = import nixpkgs-stable {
-          inherit system;
-          config.allowUnfree = true;
-        };
+        inherit pkgs-stable vars inputs;
       };
     };
 
-    homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.${system};
-      modules = [ ./home-manager ];
+    homeConfigurations.${vars.username} = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = [ ./home ];
+      extraSpecialArgs = {
+        inherit pkgs-stable vars inputs;
+      };
     };
   };
 }
-
