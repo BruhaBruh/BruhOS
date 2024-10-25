@@ -112,10 +112,12 @@
       windowrule = [
         "float, ^(imv)$"
         "float, ^(mpv)$"
+        "float, title:^(Картинка в Картинке)$"
       ];
 
       exec-once = [
         "waybar"
+        "[workspace 10 silent] nekoray"
         #"wl-paste --type text --watch cliphist store"
         #"wl-paste --type image --watch cliphist store"
       ];
@@ -193,7 +195,7 @@
         ''$mainMod SHIFT, C, exec, alacritty -e sh -c "conf"''
         ''$mainMod SHIFT, H, exec, alacritty -e sh -c "nvim ~/nix/home-manager/modules/wms/hyprland.nix"''
         ''$mainMod SHIFT, W, exec, alacritty -e sh -c "nvim ~/nix/home-manager/modules/wms/waybar.nix''
-        '', Print, exec, grim -g "$(slurp)" - | swappy -f -''
+        ''$mainMod SHIFT, S, exec, grim -g "$(slurp)" - | swappy -f -''
 
         # Waybar
         "$mainMod, B, exec, pkill -SIGUSR1 waybar"

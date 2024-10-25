@@ -3,7 +3,7 @@
 {
   environment.variables = {
     EDITOR = "vim";
-    BROWSER = "firefox";
+    BROWSER = "zen";
 
     LIBVA_DRIVER_NAME = "nvidia";
     XDG_SESSION_TYPE = "wayland";

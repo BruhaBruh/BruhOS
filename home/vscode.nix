@@ -8,7 +8,6 @@
       bbenoist.nix
       jnoortheen.nix-ide
       bradlc.vscode-tailwindcss
-      catppuccin.catppuccin-vsc
       # chadalen.vscode-jetbrains-icon-theme
       # csstools.postcss
       dbaeumer.vscode-eslint

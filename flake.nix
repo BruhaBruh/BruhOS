@@ -11,10 +11,7 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }@inputs: 
@@ -54,7 +51,7 @@
         ./system
       ];
       specialArgs = {
-        inherit pkgs-stable vars inputs;
+        inherit pkgs-stable vars inputs system;
       };
     };
 
@@ -62,7 +59,7 @@
       inherit pkgs;
       modules = [ ./home ];
       extraSpecialArgs = {
-        inherit pkgs-stable vars inputs;
+        inherit pkgs-stable vars inputs system;
       };
     };
   };

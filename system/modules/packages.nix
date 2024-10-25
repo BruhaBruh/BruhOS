@@ -1,10 +1,10 @@
-{ pkgs, vars, ... }:
+{ pkgs, vars, system, inputs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
     # Desktop Apps
-    firefox-wayland
     chromium
+    inputs.zen-browser.packages.${system}.default
     telegram-desktop
     vscode
     vesktop
