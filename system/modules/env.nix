@@ -3,6 +3,7 @@
 {
   environment.variables = {
     EDITOR = "vim";
+    BROWSER = "firefox";
 
     LIBVA_DRIVER_NAME = "nvidia";
     XDG_SESSION_TYPE = "wayland";
@@ -22,7 +23,7 @@
     
     XDG_CACHE_HOME = "\${HOME}/.cache";
 	  XDG_CONFIG_HOME = "\${HOME}/.config";
-	  #XDG_BIN_HOME = "\${HOME}/.local/bin";
+	  # XDG_BIN_HOME = "\${HOME}/.local/bin";
 	  XDG_DATA_HOME = "\${HOME}/.local/share";
   };
 }

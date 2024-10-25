@@ -8,7 +8,10 @@
     ./waybar.nix
     ./foot.nix
     ./rofi.nix
+    ./vscode.nix
   ];
+
+  nixpkgs.config.allowUnfree = true;
 
   home.username = "${vars.username}";
   home.homeDirectory = "/home/${vars.username}";
