@@ -118,7 +118,7 @@
       ];
 
       exec-once = [
-        # "waybar"
+        "waybar 2>&1 > ~/somelog.txt"
         "[workspace 1 silent] zen"
         "[workspace 2 silent] code"
         "[workspace 3 silent] telegram-desktop"

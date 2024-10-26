@@ -30,13 +30,11 @@
     jq
     zip
     unzip
+    nixpkgs-fmt
 
     # XDG
     xdg-utils
     xdg-user-dirs
-    xdg-desktop-portal
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-hyprland
 
     # Wayland
     xwayland
@@ -91,6 +89,8 @@
     killall
     (mpv.override { scripts = [ mpvScripts.mpris ]; })
     polkit_gnome
+    libinput
+    xorg.xcursorthemes
 
     # Other
     ags

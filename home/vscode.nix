@@ -57,7 +57,7 @@
       "editor.tabSize" = 2;
       "editor.indentSize" = "tabSize";
       "editor.lineHeight" = 1.5;
-      "editor.fontFamily" = "'JetBrains Mono', monospace";
+      "editor.fontFamily" = "'JetBrainsMono Nerd Font', monospace";
       "editor.fontSize" = 16;
       "editor.fontLigatures" = false;
       "editor.fontVariations" = true;
