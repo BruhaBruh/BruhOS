@@ -10,6 +10,7 @@
     ./foot.nix
     ./rofi.nix
     ./vscode.nix
+    ./scripts.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
