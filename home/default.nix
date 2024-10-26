@@ -5,6 +5,7 @@
     ./git.nix
     ./shell.nix
     ./hyprland.nix
+    ./hyprpaper.nix
     ./waybar.nix
     ./foot.nix
     ./rofi.nix

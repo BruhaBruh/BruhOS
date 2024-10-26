@@ -16,7 +16,6 @@
     ./user.nix
     ./xdg.nix
     ./hyprland.nix
-    ./hyprlock.nix
     ./trim.nix
     ./bluetooth.nix
     ./packages.nix

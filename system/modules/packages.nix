@@ -9,6 +9,7 @@
     vscode
     vesktop
     bitwarden-desktop
+    spotify
 
     # VPN
     nekoray
@@ -47,8 +48,6 @@
 
     # WMs
     hyprland
-    hyprlock
-    hypridle
     hyprpicker
     hyprland-protocols
     hyprpaper
@@ -70,7 +69,6 @@
     slurp
     swappy
     swaynotificationcenter
-    swww
     yad
     yt-dlp
 

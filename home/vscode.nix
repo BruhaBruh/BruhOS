@@ -8,6 +8,8 @@
       bbenoist.nix
       jnoortheen.nix-ide
       bradlc.vscode-tailwindcss
+      catppuccin.catppuccin-vsc
+      catppuccin.catppuccin-vsc-icons
       # chadalen.vscode-jetbrains-icon-theme
       # csstools.postcss
       dbaeumer.vscode-eslint
@@ -50,8 +52,8 @@
       };
     };
     userSettings = {
-      "workbench.colorTheme" = "GitHub Dark Dimmed";
-      "workbench.iconTheme" = "vscode-jetbrains-icon-theme-2023-dark";
+      "workbench.colorTheme" = "Catppuccin Macchiato";
+      "workbench.iconTheme" = "catppuccin-macchiato";
       "editor.tabSize" = 2;
       "editor.indentSize" = "tabSize";
       "editor.lineHeight" = 1.5;

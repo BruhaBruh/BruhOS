@@ -29,7 +29,7 @@
         kb_variant = "lang";
         kb_options = "grp:alt_shift_toggle";
 
-        follow_mouse = 1;
+        follow_mouse = 2;
 
         touchpad = {
           natural_scroll = false;
@@ -42,6 +42,7 @@
         gaps_in = 8;
         gaps_out = 16;
         border_size = 2;
+        resize_on_border = true;
         "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
         "col.inactive_border" = "rgba(595959aa)";
 
@@ -107,6 +108,7 @@
         enable_swallow = true;
         render_ahead_of_time = false;
         disable_hyprland_logo = true;
+        font_family = "Inter";
       };
 
       windowrule = [
@@ -116,10 +118,14 @@
       ];
 
       exec-once = [
-        "waybar"
+        # "waybar"
+        "[workspace 1 silent] zen"
+        "[workspace 2 silent] code"
+        "[workspace 3 silent] telegram-desktop"
+        "[workspace 9 silent] spotify"
         "[workspace 10 silent] nekoray"
         #"wl-paste --type text --watch cliphist store"
-        #"wl-paste --type image --watch cliphist store"
+        #"wl-paste --type image --watch cliphist stvore"
       ];
 
       bind = [
