@@ -1,127 +1,194 @@
 #!/usr/bin/env bash
+set -e
+
+# Set some colors for output messages
+OK="$(tput setaf 2)[OK]$(tput sgr0)"
+ERROR="$(tput setaf 1)[ERROR]$(tput sgr0)"
+NOTE="$(tput setaf 3)[NOTE]$(tput sgr0)"
+WARN="$(tput setaf 5)[WARN]$(tput sgr0)"
+ACTION="$(tput setaf 6)[ACTION]$(tput sgr0)"
+INPUT="$(tput setaf 4)[INPUT]$(tput sgr0)"
+QUESTION="$(tput setaf 5)[?]$(tput sgr0)"
+STRICT_QUESTION="$(tput setaf 1)[?!]$(tput sgr0)"
+ORANGE=$(tput setaf 166)
+YELLOW=$(tput setaf 3)
+GRAY=$(tput setaf 8)
+RESET=$(tput sgr0)
+
+input() {
+  local message="$1"
+  local -n answer_var="$2"
+  local default="$3"
+
+  echo -e "$INPUT $message"
+  if [[ -n "$default" ]]; then
+    printf "\t$GRAY${default}: $RESET"
+  else
+    printf "\t$GRAY: $RESET"
+  fi
+  
+  read user_input
+
+  if [[ -z "${user_input}" && -n "$default" ]]; then
+    answer_var="$default"
+  else
+    answer_var="$user_input"
+  fi
+}
+
+question() {
+  local message="$1"
+  local -n answer_var="$2"
+
+  echo -e "$QUESTION $message"
+  printf "\t$GRAY(y/n): $RESET"
+  
+  read user_input
+  
+  if [[ -z "$user_input" || "$user_input" =~ ^[Yy]$ || "$user_input" == "yes" ]]; then
+    answer_var="true"
+  else
+    answer_var="false"
+  fi
+}
+
+
+strict_question() {
+  local message="$1"
+  local -n answer_var="$2"
+
+  echo -e "$STRICT_QUESTION $message"
+  printf "\t$GRAY(y/n): $RESET"
+  
+  read user_input
+  
+  if [[ "$user_input" =~ ^[Yy]$ || "$user_input" == "yes" ]]; then
+    answer_var="true"
+  else
+    answer_var="false"
+  fi
+}
+
+echo "$NOTE BruhaBruh NixOS Dots"
+echo "$NOTE Default values is ${GRAY}GRAY"
+
+echo
 
 if [ -n "$(grep -i nixos < /etc/os-release)" ]; then
-  echo "Verified this is NixOS."
-  echo "-----"
+  echo "$OK Verified this is NixOS."
 else
-  echo "This is not NixOS or the distribution information is not available."
+  echo "$ERROR This is not NixOS or the distribution information is not available."
   exit
 fi
 
-if command -v git &> /dev/null; then
-  echo "Git is installed, continuing with installation."
-  echo "-----"
+echo
+
+if [[ -x "$(command -v git)" ]]; then
+  echo "$OK Git is installed continuing with installation."
 else
-  echo "Git is not installed. Please install Git and try again."
-  echo "Example: nix-shell -p git"
+  echo "$ERROR Git is not installed. Please install Git and try again."
+  echo "$NOTE Example: nix-shell -p git"
   exit
 fi
 
-echo "Default options are in brackets []"
-echo "Just press enter to select the default"
-sleep 2
+echo
 
-echo "-----"
-
-echo "Ensure In Home Directory"
+echo "$ACTION Ensure in home directory"
 cd || exit
 
-echo "-----"
+echo
+
+input "Enter flake directory" flakeDirectory "$HOME/.dotfiles"
+
+echo
 
 backupname=$(date "+%Y-%m-%d-%H-%M-%S")
-if [ -d "nixos-dots" ]; then
-  echo "nixos-dots exists, backing up to .config/nixos-dots-backups folder."
-  if [ -d ".config/nixos-dots-backups" ]; then
-    echo "Moving current version of nixos-dots to backups folder."
-    mv "$HOME"/nixos-dots .config/nixos-dots-backups/"$backupname"
-    sleep 1
-  else
-    echo "Creating the backups folder & moving nixos-dots to it."
-    mkdir -p .config/nixos-dots-backups
-    mv "$HOME"/nixos-dots .config/nixos-dots-backups/"$backupname"
-    sleep 1
-  fi
-else
-  echo "Thank you for choosing nixos-dots."
-  echo "I hope you find your time here enjoyable!"
+if [[ -d ".dotfiles" ]]; then
+  echo "$NOTE Dot files exists. backing up to ${flakeDirectory}-${backupname}"
+  mv "$flakeDirectory" "$flakeDirectory-$backupname"
+  sleep 1
 fi
 
-echo "-----"
+echo
 
-echo "Cloning & Entering nixos-dots Repository"
-git clone https://github.com/BruhaBruh/nixos-dots.git
-cd nixos-dots || exit
+echo "$ACTION Cloning nixos-dots Repository & entering"
+git clone https://github.com/BruhaBruh/nixos-dots.git $flakeDirectory
+cd $flakeDirectory || exit
+
+sed -i "s|flakeDirectory = \"\$HOME/.dotfiles\"|flakeDirectory = \"$flakeDirectory\"|g" flake.nix
+
+echo
+
+input "Enter hostname" hostName "nixos"
+
 mkdir hosts/"$hostName"
-cp -r hosts/default hosts/"$hostName"
+cp -r hosts/default/* hosts/"$hostName"/
+
+sed -i "s|hostName = \"default\"|hostName = \"$hostName\"|g" flake.nix
+
+echo
+
+input "Enter username" username "bruhabruh"
+
+sed -i "s|username = \"bruhabruh\"|username = \"$username\"|g" flake.nix
+
+echo
+
+input "Enter time zone" timeZone "Asia/Yekaterinburg"
+
+sed -i "s|timeZone = \"Asia/Yekaterinburg\"|timeZone = \"$timeZone\"|g" flake.nix
+
+echo
+
+input "Enter default locale" defaultLocale "en_US.UTF-8"
+
+sed -i "s|default = \"en_US.UTF-8\"|default = \"$defaultLocale\"|g" flake.nix
+sed -i "s|\"en_US.UTF-8/UTF-8\"|\"$defaultLocale/UTF-8\"|g" flake.nix
+
+echo
+
+input "Enter extra locale" extraLocale "ru_RU.UTF-8"
+
+sed -i "s|extra = \"ru_RU.UTF-8\"|extra = \"$extraLocale\"|g" flake.nix
+sed -i "s|\"ru_RU.UTF-8/UTF-8\"|\"$extraLocale/UTF-8\"|g" flake.nix
+
+echo
+
+input "Enter git username" gitUsername "BruhaBruh"
+
+sed -i "s|username = \"BruhaBruh\"|username = \"$gitUsername\"|g" flake.nix
+
+echo
+
+input "Enter git email" gitEmail "drugsho.jaker@gmail.com"
+
+sed -i "s|email = \"drugsho.jaker@gmail.com\"|email = \"$gitEmail\"|g" flake.nix
+
+echo
+
+input "Enter git default branch" gitDefaultBranch "main"
+
+sed -i "s|defaultBranch = \"main\"|defaultBranch = \"$gitDefaultBranch\"|g" flake.nix
+
+echo
+
+echo "$ACTION Generating The Hardware Configuration"
+sudo nixos-generate-config --show-hardware-config > ./hosts/$hostName/hardware-configuration.nix
+sleep 2
+echo
+
+echo "$ACTION Add changes to git"
 git config --global user.name "installer"
 git config --global user.email "installer@gmail.com"
 git add .
 
-echo "-----"
+echo
 
-read -rp "Enter Your Hostname: [ default ] " hostName
-if [ -z "$hostName" ]; then
-  hostName="default"
-fi
-
-sed -i "/^\s*hostName[[:space:]]*=[[:space:]]*\"/s/\"\(.*\)\"/\"$hostName\"/" ./flake.nix
-
-echo "-----"
-
-installusername=$(echo $USER)
-read -rp "Enter Your Username: [ ${installusername} ] " installusername
-if [ -z "$installusername" ]; then
-  installusername=$(echo $USER)
-fi
-
-sed -i "/^\s*username[[:space:]]*=[[:space:]]*\"/s/\"\(bruhabruh\)\"/\"$installusername\"/" ./flake.nix
-
-echo "-----"
-
-read -rp "Enter Your Flake Directory: [ \$HOME/nixos-dots ] " flakeDirectory
-if [ -z "$flakeDirectory" ]; then
-  flakeDirectory="\$HOME/nixos-dots"
-fi
-
-sed -i "/^\s*flakeDirectory[[:space:]]*=[[:space:]]*\"/s/\"\(.*\)\"/\"$flakeDirectory\"/" ./flake.nix
-
-echo "-----"
-
-read -rp "Enter Your Git Username: [ BruhaBruh ] " gitUsername
-if [ -z "$gitUsername" ]; then
-  gitUsername="BruhaBruh"
-fi
-
-sed -i "/^\s*username[[:space:]]*=[[:space:]]*\"/s/\"\(BruhaBruh\)\"/\"$gitUsername\"/" ./flake.nix
-
-echo "-----"
-
-read -rp "Enter Your Git Email: [ drugsho.jaker@gmail.com ] " gitEmail
-if [ -z "$gitEmail" ]; then
-  gitEmail="drugsho.jaker@gmail.com"
-fi
-
-sed -i "/^\s*email[[:space:]]*=[[:space:]]*\"/s/\"\(.*\)\"/\"$gitEmail\"/" ./flake.nix
-
-echo "-----"
-
-read -rp "Enter Your Git Default Branch: [ main ] " gitDefaultBranch
-if [ -z "$gitDefaultBranch" ]; then
-  gitDefaultBranch="main"
-fi
-
-sed -i "/^\s*defaultBranch[[:space:]]*=[[:space:]]*\"/s/\"\(.*\)\"/\"$gitDefaultBranch\"/" ./flake.nix
-
-echo "-----"
-
-echo "Generating The Hardware Configuration"
-sudo nixos-generate-config --show-hardware-config > ./hosts/$hostName/hardware-configuration.nix
-
-echo "-----"
-
-echo "Setting Required Nix Settings Then Going To Install"
+echo "$ACTION Setting Required Nix Settings Then Going To Install"
 NIX_CONFIG="experimental-features = nix-command flakes"
 
-echo "-----"
+echo
 
-sudo nixos-rebuild switch --flake ~/nixos-dots/#${hostName}
+sudo nixos-rebuild switch --flake ./#${hostName}
+
+echo "$OK Complete install"

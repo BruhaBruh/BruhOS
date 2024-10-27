@@ -15,11 +15,10 @@
 
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
-      pkgs-stable = nixpkgs-stable.legacyPackages.${system};
 
       vars = {
-        flakeDirectory = "$HOME/nixos-dots";
-        hostName = "nixos";
+        flakeDirectory = "$HOME/.dotfiles";
+        hostName = "default";
         username = "bruhabruh";
 
         timeZone = "Asia/Yekaterinburg";
@@ -43,14 +42,14 @@
     {
       nixosConfigurations = {
         "${vars.hostName}" = lib.nixosSystem {
+          inherit system;
           specialArgs = {
-	          inherit system;
+            inherit system;
             inherit inputs;
             inherit vars;
           };
           modules = [
             ./hosts/${vars.hostName}/configuration.nix
-            inputs.stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {
               home-manager.extraSpecialArgs = {

@@ -30,7 +30,7 @@
       "nowatchdog" 
       "modprobe.blacklist=sp5100_tco" #watchdog for AMD
       "modprobe.blacklist=iTCO_wdt" #watchdog for Intel
- 	  ];
+     ];
 
     # This is for OBS Virtual Cam Support
     kernelModules = [ "v4l2loopback" ];
@@ -51,22 +51,22 @@
     loader.systemd-boot.enable = true;
   
     loader.efi = {
-	    #efiSysMountPoint = "/efi"; #this is if you have separate /efi partition
-	    canTouchEfiVariables = true;
-  	  };
+      #efiSysMountPoint = "/efi"; #this is if you have separate /efi partition
+      canTouchEfiVariables = true;
+      };
 
     loader.timeout = 1;    
-  			
+        
     # Bootloader GRUB
     #loader.grub = {
-	    #enable = true;
-	    #  devices = [ "nodev" ];
-	    #  efiSupport = true;
+      #enable = true;
+      #  devices = [ "nodev" ];
+      #  efiSupport = true;
       #  gfxmodeBios = "auto";
-	    #  memtest86.enable = true;
-	    #  extraGrubInstallArgs = [ "--bootloader-id=${host}" ];
-	    #  configurationName = "${host}";
-  	  #	 };
+      #  memtest86.enable = true;
+      #  extraGrubInstallArgs = [ "--bootloader-id=${host}" ];
+      #  configurationName = "${host}";
+      #   };
 
     # Bootloader GRUB theme, configure below
 
@@ -138,30 +138,30 @@
   nixpkgs.config.allowUnfree = true;
   
   programs = {
-	  hyprland = {
+    hyprland = {
       enable = true;
-		  package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland; #hyprland-git
-		  portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland; # xdphls
-  	  xwayland.enable = true;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland; #hyprland-git
+      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland; # xdphls
+      xwayland.enable = true;
       };
 
-	
-	  waybar.enable = true;
-	  hyprlock.enable = true;
-	  firefox.enable = true;
-	  git.enable = true;
+  
+    waybar.enable = true;
+    hyprlock.enable = true;
+    firefox.enable = true;
+    git.enable = true;
     nm-applet.indicator = true;
     #neovim.enable = true;
 
-	  thunar.enable = true;
-	  thunar.plugins = with pkgs.xfce; [
-		  exo
-		  mousepad
-		  thunar-archive-plugin
-		  thunar-volman
-		  tumbler
-  	  ];
-	
+    thunar.enable = true;
+    thunar.plugins = with pkgs.xfce; [
+      exo
+      mousepad
+      thunar-archive-plugin
+      thunar-volman
+      tumbler
+      ];
+  
     virt-manager.enable = false;
     
     #steam = {
@@ -181,7 +181,7 @@
       enable = true;
       enableSSHSupport = true;
     };
-	
+  
   };
 
   users = {
@@ -260,7 +260,7 @@
     waybar  # if wanted experimental next line
     #(pkgs.waybar.overrideAttrs (oldAttrs: { mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];}))
   ]) ++ [
-	  python-packages
+    python-packages
   ];
 
   # FONTS
@@ -270,9 +270,9 @@
     noto-fonts-cjk-sans
     jetbrains-mono
     font-awesome
-	  terminus_font
+    terminus_font
     (nerdfonts.override {fonts = ["JetBrainsMono"];})
- 	];
+   ];
 
   # Extra Portal Configuration
   xdg.portal = {
@@ -302,7 +302,7 @@
       vt = 3;
       settings = {
         default_session = {
-          user = username;
+          user = "${vars.username}";
           command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland"; # start Hyprland with a TUI login manager
         };
       };
@@ -313,22 +313,22 @@
       autodetect = true;
     };
     
-	  gvfs.enable = true;
-	  tumbler.enable = true;
+    gvfs.enable = true;
+    tumbler.enable = true;
 
-	  pipewire = {
+    pipewire = {
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-	    wireplumber.enable = true;
-  	  };
-	
-	  udev.enable = true;
-	  envfs.enable = true;
-	  dbus.enable = true;
+      wireplumber.enable = true;
+      };
+  
+    udev.enable = true;
+    envfs.enable = true;
+    dbus.enable = true;
 
-	  fstrim = {
+    fstrim = {
       enable = true;
       interval = "weekly";
       };
@@ -340,15 +340,15 @@
   
     openssh.enable = true;
     # flatpak.enable = false;
-	
-  	blueman.enable = true;
-  	
-  	#hardware.openrgb.enable = true;
-  	#hardware.openrgb.motherboard = "amd";
+  
+    blueman.enable = true;
+    
+    #hardware.openrgb.enable = true;
+    #hardware.openrgb.motherboard = "amd";
 
-	  fwupd.enable = true;
+    fwupd.enable = true;
 
-	  upower.enable = true;
+    upower.enable = true;
     
     gnome.gnome-keyring.enable = true;
     
@@ -385,16 +385,16 @@
 
   # zram
   # zramSwap = {
-	#   enable = true;
-	#   priority = 100;
-	#   memoryPercent = 30;
-	#   swapDevices = 1;
+  #   enable = true;
+  #   priority = 100;
+  #   memoryPercent = 30;
+  #   swapDevices = 1;
   #   algorithm = "zstd";
   #   };
 
   powerManagement = {
-  	enable = true;
-	  cpuFreqGovernor = "schedutil";
+    enable = true;
+    cpuFreqGovernor = "schedutil";
   };
 
   #hardware.sane = {
@@ -409,14 +409,14 @@
 
   # Bluetooth
   hardware = {
-  	bluetooth = {
-	    enable = true;
-	    powerOnBoot = true;
-	    settings = {
-		    General = {
-		      Enable = "Source,Sink,Media,Socket";
-		      Experimental = true;
-		    };
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+          Experimental = true;
+        };
       };
     };
   };
