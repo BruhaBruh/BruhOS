@@ -102,11 +102,14 @@ input "Enter flake directory" flakeDirectory "$HOME/.dotfiles"
 
 echo
 
-backupname=$(date "+%Y-%m-%d-%H-%M-%S")
-if [[ -d ".dotfiles" ]]; then
-  echo "$NOTE Dot files exists. backing up to ${flakeDirectory}-${backupname}"
-  mv "$flakeDirectory" "$flakeDirectory-$backupname"
-  sleep 1
+if [[ -d "$flakeDirectory" ]]; then
+  question "Dot files exists. Do you want to backup?" answer
+  if [[ "$answer" == "true" ]]; then
+    backupname=$(date "+%Y-%m-%d-%H-%M-%S")
+    echo "$NOTE Dot files exists. backing up to ${flakeDirectory}-${backupname}"
+    mv "$flakeDirectory" "$flakeDirectory-$backupname"
+    sleep 1
+  fi
 fi
 
 echo
@@ -121,10 +124,7 @@ echo
 
 input "Enter hostname" hostName "nixos"
 
-mkdir hosts/"$hostName"
-cp -r hosts/default/* hosts/"$hostName"/
-
-sed -i "s|hostName = \"default\"|hostName = \"$hostName\"|g" flake.nix
+sed -i "s|hostName = \"nixos\"|hostName = \"$hostName\"|g" flake.nix
 
 echo
 
@@ -173,8 +173,8 @@ sed -i "s|defaultBranch = \"main\"|defaultBranch = \"$gitDefaultBranch\"|g" flak
 echo
 
 echo "$ACTION Generating The Hardware Configuration"
-sudo nixos-generate-config --show-hardware-config > ./hosts/$hostName/host/hardware-configuration.nix
-sleep 2
+sudo nixos-generate-config --show-hardware-config > ./system/hardware-configuration.nix
+sleep 1
 
 echo
 
@@ -190,6 +190,12 @@ NIX_CONFIG="experimental-features = nix-command flakes"
 
 echo
 
-sudo nixos-rebuild switch --flake ./#${hostName}
+strict_question "Rebuild NixOS?" answer
+if [[ "$answer" == "false" ]]; then
+  echo "$NOTE To rebuild NixOS use: sudo nixos-rebuild switch --flake $flakeDirectory"
+  exit
+fi
+
+sudo nixos-rebuild switch --flake ./
 
 echo "$OK Complete install"
