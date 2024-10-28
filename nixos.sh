@@ -188,3 +188,5 @@ echo
 echo "$ACTION Install NixOS"
 
 nixos-install
+
+echo "$OK NixOS successfully installed!"

@@ -36,39 +36,6 @@ input() {
   fi
 }
 
-question() {
-  local message="$1"
-  local -n answer_var="$2"
-
-  echo -e "$QUESTION $message"
-  printf "\t$GRAY(y/n): $RESET"
-  
-  read user_input
-  
-  if [[ -z "$user_input" || "$user_input" =~ ^[Yy]$ || "$user_input" == "yes" ]]; then
-    answer_var="true"
-  else
-    answer_var="false"
-  fi
-}
-
-
-strict_question() {
-  local message="$1"
-  local -n answer_var="$2"
-
-  echo -e "$STRICT_QUESTION $message"
-  printf "\t$GRAY(y/n): $RESET"
-  
-  read user_input
-  
-  if [[ "$user_input" =~ ^[Yy]$ || "$user_input" == "yes" ]]; then
-    answer_var="true"
-  else
-    answer_var="false"
-  fi
-}
-
 echo "$NOTE BruhaBruh NixOS Dots"
 echo "$NOTE Default values is ${GRAY}GRAY"
 
@@ -91,7 +58,6 @@ else
   exit
 fi
 
-echo
 
 echo "$ACTION Ensure in home directory"
 cd || exit
@@ -178,18 +144,4 @@ sleep 2
 
 echo
 
-echo "$ACTION Add changes to git"
-git config --global user.name "installer"
-git config --global user.email "installer@gmail.com"
 git add .
-
-echo
-
-echo "$ACTION Setting Required Nix Settings Then Going To Install"
-NIX_CONFIG="experimental-features = nix-command flakes"
-
-echo
-
-sudo nixos-rebuild switch --flake ./#${hostName}
-
-echo "$OK Complete install"

@@ -5,8 +5,10 @@
 }:
 
 {
-  users.users = {
-    "${vars.username}" = {
+  users = {
+    mutableUsers = true;
+
+    users."${vars.username}" = {
       homeMode = "755";
       isNormalUser = true;
       description = "${vars.git.username}";
@@ -20,7 +22,7 @@
         "input" 
         "audio"
       ];
-      shell = pkgs.bash;
+      shell = pkgs.zsh;
       ignoreShellProgramCheck = true;
       packages = with pkgs; [
       ];

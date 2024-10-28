@@ -49,7 +49,7 @@
             inherit vars;
           };
           modules = [
-            ./hosts/${vars.hostName}/configuration.nix
+            ./hosts/${vars.hostName}/host/configuration.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.extraSpecialArgs = {
@@ -59,7 +59,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "backup";
-              home-manager.users.${vars.username} = import ./hosts/${vars.hostName}/home.nix;
+              home-manager.users.${vars.username} = import ./hosts/${vars.hostName}/home;
             }
           ];
         };
