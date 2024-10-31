@@ -3,21 +3,22 @@
 {
   programs.waybar = {
     enable = true;
-    # package = pkgs.waybar.overrideAttrs (oldAttrs: {
-    #   mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-    # });
     settings = {
       mainBar = {
         layer = "top";
         position = "top";
-        margin = "0 16 -8 16";
+        margin-top = 8;
+        margin-bottom = 0;
+        margin-left = 12;
+        margin-right = 12;
+        height = 24;
 
         modules-left = [ "custom/apps" "hyprland/language" "clock" "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "temperature" "memory" "cpu" "pulseaudio" "custom/logout" "custom/reboot" "custom/poweroff" ];
+        modules-right = [ "cpu" "temperature" "memory" "pulseaudio" "custom/logout" "custom/reboot" "custom/poweroff" ];
 
         clock = {
-          format = "{:%H:%M:%S %d.%m.%Y} ";
+          format = "{:%H:%M:%S  %d.%m.%Y} ";
           tooltip = false;
           interval = 1;
         };
@@ -25,19 +26,17 @@
         cpu = {
           interval = 10;
           format = "{}% ";
-          # max-length = 10;
+          tooltip = false;
         };
 
         memory = {
           interval = 30;
           format = "{used:0.1f}G ";
+          tooltip = false;
         };
 
         temperature = {
-          # thermal-zone = 2;
-          # hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
           critical-threshold = 80;
-          # format-critical = "{temperatureC}°C {icon}";
           format = "{temperatureC}°C {icon}";
           format-icons = ["" "" "" "" ""];
           tooltip = false;
@@ -46,7 +45,6 @@
         "hyprland/language" = {
           format-en = "US";
           format-ru = "RU";
-          # min-length = 5;
           tooltip = false;
         };
 
@@ -65,7 +63,6 @@
         };
 
         pulseaudio = {
-          # scroll-step = 1; # %, can be a float
           reverse-scrolling = 1;
           format = "{volume}% {icon}  {format_source}";
           format-bluetooth = "{volume}% {icon} {format_source}";
@@ -82,8 +79,8 @@
             car = "";
             default = ["" "" ""];
           };
-          # min-length = 13;
           tooltip = false;
+          on-click = "pavucontrol";
         };
 
         "custom/apps" = {
@@ -115,11 +112,11 @@
       * {
         border: none;
         border-radius: 0;
+        margin: 0px;
         /* `otf-font-awesome` is required to be installed for icons */
         font-family: 'JetBrainsMono Nerd Font', monospace;
         font-weight: bold;
         font-size: 14px;
-        min-height: 16px;
         border-radius: 9999px;
       }
 
@@ -131,44 +128,54 @@
         opacity: 0.2;
       }
 
-      #custom-apps {
-        margin: 8px 16px 8px 0px;
-        padding: 0px 10px 0 8px;
-        background: #8aadf4;
-        color: #24273a;
-      }
-
-      #custom-logout {
-        margin: 8px 0px 8px 16px;
-        padding: 0px 12px 0 8px;
-        background: #8aadf4;
-        color: #24273a;
-      }
-
-      #custom-reboot {
-        margin: 8px 0px 8px 16px;
-        padding: 0px 12px 0 8px;
-        background: #eed49f;
-        color: #24273a;
-      }
-
+      #custom-apps,
+      #language,
+      #clock,
+      #window,
+      #cpu,
+      #temperature,
+      #memory,
+      #pulseaudio,
+      #custom-logout,
+      #custom-reboot,
       #custom-poweroff {
-        margin: 8px 0px 8px 16px;
-        padding: 0px 12px 2px 8px;
-        background: #ed8796;
-        color: #fff;
-      }
-
-      #language {
-        margin: 8px 16px 8px 0px;
+        margin-left: 4px;
+        margin-right: 4px;
         padding: 0px 8px;
         background: #cad3f5;
         color: #24273a;
       }
 
+      #custom-apps:hover,
+      #pulseaudio:hover,
+      #custom-logout:hover,
+      #custom-reboot:hover,
+      #custom-poweroff:hover {
+        opacity: 0.9;
+      }
+
+      #custom-apps {
+        background: #8aadf4;
+        min-width: 22px;
+        padding: 0px;
+        padding-right: 2px;
+        transition: all .2s ease;
+      }
+
+      #clock {
+        padding-right: 12px;
+      }
+
+      #workspaces {
+        margin: 0px 4px;
+        padding: 0px;
+      }
+
       #workspaces button {
-        margin: 8px 4px;
-        padding: 0px 2px;
+        padding: 0px;
+        margin-left: 2px;
+        margin-right: 2px;
+        min-width: 24px;
         background: #494d64;
         box-shadow: inherit;
         transition: all .2s ease;
@@ -179,54 +186,53 @@
       }
 
       #workspaces button.active {
-        padding: 0px 8px;
+        min-width: 32px;
         background: #cad3f5;
-      }
-
-      #window {
-        margin: 8px 4px;
-        padding: 0px 8px;
-        background: #cad3f5;
-        color: #24273a;
       }
 
       window#waybar.empty #window {
         background: transparent;
       }
 
-      #pulseaudio {
-        margin: 8px 0 8px 16px;
-        padding: 0px 10px 0 8px;
-        background: #cad3f5;
-        color: #24273a;
+      #cpu {
+        padding-right: 14px;
       }
 
-      #temperature {
-        margin: 8px 0px 8px 0;
-        padding: 0px 8px 0 8px;
-        background: #cad3f5;
-        color: #24273a;
+      #temperature.critical {
+        background: #ed8796;
       }
 
       #memory {
-        margin: 8px 0px 8px 16px;
-        padding: 0px 18px 0 8px;
-        background: #cad3f5;
-        color: #24273a;
+        padding-right: 16px;
       }
 
-      #cpu {
-        margin: 8px 0px 8px 16px;
-        padding: 0px 14px 0 8px;
-        background: #cad3f5;
-        color: #24273a;
+      #pulseaudio {
+        padding-right: 9px;
+        transition: all .2s ease;
       }
 
-      #clock {
-        margin: 8px 12px 8px 0px;
-        padding: 0px 10px 0 8px;
-        background: #cad3f5;
-        color: #24273a;
+      #custom-logout {
+        background: #8aadf4;
+        min-width: 20px;
+        padding: 0px;
+        padding-right: 4px;
+        transition: all .2s ease;
+      }
+
+      #custom-reboot {
+        background: #eed49f;
+        min-width: 20px;
+        padding: 0px;
+        padding-right: 4px;
+        transition: all .2s ease;
+      }
+
+      #custom-poweroff {
+        background: #ed8796;
+        min-width: 21px;
+        padding: 0px;
+        padding-right: 3px;
+        transition: all .2s ease;
       }
     '';
   };

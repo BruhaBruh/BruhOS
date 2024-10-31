@@ -8,13 +8,92 @@
     settings = {
       "$mainMod" = "SUPER";
 
+      "$ROSEWATER" = "rgb(f4dbd6)";
+      "$ROSEWATER_ALPHA" = "f4dbd6";
+
+      "$FLAMINGO" = "rgb(f0c6c6)";
+      "$FLAMINGO_ALPHA" = "f0c6c6";
+
+      "$PINK" = "rgb(f5bde6)";
+      "$PINK_ALPHA" = "f5bde6";
+
+      "$MAUVE" = "rgb(c6a0f6)";
+      "$MAUVE_ALPHA" = "c6a0f6";
+
+      "$RED" = "rgb(ed8796)";
+      "$RED_ALPHA" = "ed8796";
+
+      "$MAROON" = "rgb(ee99a0)";
+      "$MAROON_ALPHA" = "ee99a0";
+
+      "$PEACH" = "rgb(f5a97f)";
+      "$PEACH_ALPHA" = "f5a97f";
+
+      "$YELLOW" = "rgb(eed49f)";
+      "$YELLOW_ALPHA" = "eed49f";
+
+      "$GREEN" = "rgb(a6da95)";
+      "$GREEN_ALPHA" = "a6da95";
+
+      "$TEAL" = "rgb(8bd5ca)";
+      "$TEAL_ALPHA" = "8bd5ca";
+
+      "$SKY" = "rgb(91d7e3)";
+      "$SKY_ALPHA" = "91d7e3";
+
+      "$SAPPHIRE" = "rgb(7dc4e4)";
+      "$SAPPHIRE_ALPHA" = "7dc4e4";
+
+      "$BLUE" = "rgb(8aadf4)";
+      "$BLUE_ALPHA" = "8aadf4";
+
+      "$LAVENDER" = "rgb(b7bdf8)";
+      "$LAVENDER_ALPHA" = "b7bdf8";
+
+      "$TEXT" = "rgb(cad3f5)";
+      "$TEXT_ALPHA" = "cad3f5";
+
+      "$SUBTEXT1" = "rgb(b8c0e0)";
+      "$SUBTEXT1_ALPHA" = "b8c0e0";
+
+      "$SUBTEXT0" = "rgb(a5adcb)";
+      "$SUBTEXT0_ALPHA" = "a5adcb";
+
+      "$OVERLAY2" = "rgb(939ab7)";
+      "$OVERLAY2_ALPHA" = "939ab7";
+
+      "$OVERLAY1" = "rgb(8087a2)";
+      "$OVERLAY1_ALPHA" = "8087a2";
+
+      "$OVERLAY0" = "rgb(6e738d)";
+      "$OVERLAY0_ALPHA" = "6e738d";
+
+      "$SURFACE2" = "rgb(5b6078)";
+      "$SURFACE2_ALPHA" = "5b6078";
+
+      "$SURFACE1" = "rgb(494d64)";
+      "$SURFACE1_ALPHA" = "494d64";
+
+      "$SURFACE0" = "rgb(363a4f)";
+      "$SURFACE0_ALPHA" = "363a4f";
+
+      "$BASE" = "rgb(24273a)";
+      "$BASE_ALPHA" = "24273a";
+
+      "$MANTLE" = "rgb(1e2030)";
+      "$MANTLE_ALPHA" = "1e2030";
+
+      "$CRUST" = "rgb(181926)";
+      "$CRUST_ALPHA" = "181926";
+
       monitor = ",1920x1080@144,0x0,1";
 
       env = [
         "XDG_CURRENT_DESKTOP,Hyprland"
         "XDG_SESSION_TYPE,wayland"
         "XDG_SESSION_DESKTOP,Hyprland"
-        "XCURSOR_SIZE,36"
+        "XCURSOR_THEME,Catppuccin-Macchiato-Dark"
+        "XCURSOR_SIZE,24"
         "QT_QPA_PLATFORM,wayland"
         "XDG_SCREENSHOTS_DIR,~/screens"
       ];
@@ -43,8 +122,8 @@
         gaps_out = 16;
         border_size = 2;
         resize_on_border = true;
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        "col.inactive_border" = "rgba(595959aa)";
+        "col.active_border" = "rgba($BLUE_ALPHAee) rgba($SKY_ALPHAee) 45deg";
+        "col.inactive_border" = "rgba($SURFACE2_ALPHAaa)";
 
         layout = "dwindle";
       };
@@ -62,7 +141,7 @@
         drop_shadow = true;
         shadow_range = 4;
         shadow_render_power = 3;
-        "col.shadow" = "rgba(1a1a1aee)";
+        "col.shadow" = "rgba($SURFACE0_ALPHAee)";
       };
 
       animations = {
@@ -114,18 +193,31 @@
       windowrule = [
         "float, ^(imv)$"
         "float, ^(mpv)$"
-        "float, title:^(Картинка в Картинке)$"
+      ];
+
+      windowrulev2 = [
+        "workspace 1,initialTitle:^(Zen Browser)$"
+        "workspace 2,initialTitle:^(Visual Studio Code)$"
+        "workspace 3,initialTitle:^(Telegram)$"
+        "workspace 9,initialTitle:^(Spotify)$"
+        "workspace 10,initialClass:^(nekoray)$"
+        "float,initialTitle:^Картинка в картинке$"
+        "center,initialTitle:^Картинка в картинке$"
+        "pin,initialTitle:^Картинка в картинке$"
       ];
 
       exec-once = [
+        # Random Wallpaper Every 15 minutes
+        "systemctl --user restart random-wallpaper.service"
+        "systemctl --user restart random-wallpaper.timer"
+
         "waybar"
+
         "[workspace 1 silent] zen"
         "[workspace 2 silent] code"
         "[workspace 3 silent] telegram-desktop"
         "[workspace 9 silent] spotify"
         "[workspace 10 silent] nekoray"
-        #"wl-paste --type text --watch cliphist store"
-        #"wl-paste --type image --watch cliphist stvore"
       ];
 
       bind = [
@@ -196,12 +288,8 @@
         ", XF86MonBrightnessDown, exec, brightnessctl set 5%- "
         ", XF86MonBrightnessUp, exec, brightnessctl set +5% "
 
-        # Configuration files
-        ''$mainMod SHIFT, N, exec, alacritty -e sh -c "rb"''
-        ''$mainMod SHIFT, C, exec, alacritty -e sh -c "conf"''
-        ''$mainMod SHIFT, H, exec, alacritty -e sh -c "nvim ~/nix/home-manager/modules/wms/hyprland.nix"''
-        ''$mainMod SHIFT, W, exec, alacritty -e sh -c "nvim ~/nix/home-manager/modules/wms/waybar.nix''
-        ''$mainMod SHIFT, S, exec, grim -g "$(slurp)" - | swappy -f -''
+        # Screenshot
+        ''$mainMod SHIFT, S, exec, grim -g "$(slurp)" - | wl-copy''
 
         # Waybar
         "$mainMod, B, exec, pkill -SIGUSR1 waybar"

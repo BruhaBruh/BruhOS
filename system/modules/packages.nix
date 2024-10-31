@@ -31,6 +31,7 @@
     zip
     unzip
     nixpkgs-fmt
+    gh
 
     # XDG
     xdg-utils
@@ -65,7 +66,6 @@
     qt6Packages.qtstyleplugin-kvantum
     rofi-wayland
     slurp
-    swappy
     swaynotificationcenter
     yad
     yt-dlp

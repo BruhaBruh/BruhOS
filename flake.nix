@@ -23,8 +23,8 @@
     pkgs-stable = nixpkgs-stable.legacyPackages.${system};
 
     vars = {
-      flakeDirectory = "$HOME/.dotfiles";
-      hostName = "nixos";
+      flakeDirectory = "/home/bruhabruh/.dotfiles";
+      hostName = "desktop";
       username = "bruhabruh";
 
       timeZone = "Asia/Yekaterinburg";
