@@ -120,7 +120,7 @@
       "files.autoSave" = "off";
       "vs-code-prettier-eslint.prettierLast" = false;
       "cSpell.language" = "en,ru";
-      "cSpell.userWords" = [];
+      "cSpell.userWords" = [ ];
       "security.workspace.trust.untrustedFiles" = "open";
       "prisma.showPrismaDataPlatformNotification" = false;
       "[prisma]" = {
@@ -140,6 +140,9 @@
       ];
       "tailwindcss-intellisense.trace.server" = "verbose";
       "editor.renderWhitespace" = "all";
+      "[nix]" = {
+        "editor.defaultFormatter" = "jnoortheen.nix-ide";
+      };
     };
   };
 }

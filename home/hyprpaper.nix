@@ -16,7 +16,8 @@ let
     hyprctl hyprpaper preload "$wallpaper"
     hyprctl hyprpaper wallpaper ",$wallpaper"
   '';
-in {
+in
+{
   services.hyprpaper = {
     enable = true;
     settings = {
@@ -47,7 +48,7 @@ in {
         WantedBy = [ "timers.target" ];
       };
     };
-    
+
     services.random-wallpaper = {
       Unit = {
         Description = "Service to change wallpaper";

@@ -92,7 +92,7 @@
         "XDG_CURRENT_DESKTOP,Hyprland"
         "XDG_SESSION_TYPE,wayland"
         "XDG_SESSION_DESKTOP,Hyprland"
-        "XCURSOR_THEME,Catppuccin-Macchiato-Dark"
+        "XCURSOR_THEME,catppuccin-macchiato-dark-cursors"
         "XCURSOR_SIZE,24"
         "QT_QPA_PLATFORM,wayland"
         "XDG_SCREENSHOTS_DIR,~/screens"
@@ -201,8 +201,10 @@
         "workspace 3,initialTitle:^(Telegram)$"
         "workspace 9,initialTitle:^(Spotify)$"
         "workspace 10,initialClass:^(nekoray)$"
+
         "float,initialTitle:^Картинка в картинке$"
-        "center,initialTitle:^Картинка в картинке$"
+        "size 450 254,initialTitle:^Картинка в картинке$"
+        "move 100%-w-16 100%-w-16,initialTitle:^Картинка в картинке$"
         "pin,initialTitle:^Картинка в картинке$"
       ];
 
@@ -283,7 +285,7 @@
         ", XF86AudioLowerVolume, exec, pamixer -d 5 "
         ", XF86AudioMute, exec, pamixer -t"
         ", XF86AudioMicMute, exec, pamixer --default-source -m"
-        
+
         # Brightness control
         ", XF86MonBrightnessDown, exec, brightnessctl set 5%- "
         ", XF86MonBrightnessUp, exec, brightnessctl set +5% "

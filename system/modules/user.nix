@@ -17,7 +17,7 @@
         "video"
         "audio"
       ];
-      packages = with pkgs; [];
+      packages = with pkgs; [ ];
     };
   };
 }

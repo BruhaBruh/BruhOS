@@ -20,5 +20,6 @@
     ./bluetooth.nix
     ./packages.nix
     ./font.nix
+    ./stylix.nix
   ];
 }

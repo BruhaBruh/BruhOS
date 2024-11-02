@@ -9,9 +9,10 @@
     jetbrains-mono
     font-awesome
     terminus_font
-    (nerdfonts.override { fonts = ["JetBrainsMono"]; })
+    twemoji-color-font
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
-  
+
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {

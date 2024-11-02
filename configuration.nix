@@ -3,7 +3,8 @@
 let
   hostName = "nixos";
   username = "bruhabruh";
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
   ];

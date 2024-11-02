@@ -1,4 +1,4 @@
-{ pkgs, vars, system, inputs, ... }:
+{ pkgs, pkgs-stable, vars, system, inputs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -10,6 +10,7 @@
     vesktop
     bitwarden-desktop
     spotify
+    pkgs-stable.obs-studio
 
     # VPN
     nekoray
@@ -91,6 +92,7 @@
     polkit_gnome
     libinput
     xorg.xcursorthemes
+    base16-schemes
 
     # Other
     ags
@@ -108,6 +110,15 @@
     zsh.enable = true;
     waybar.enable = true;
     git.enable = true;
+    obs-studio = {
+      enable = true;
+      plugins = with pkgs-stable.obs-studio-plugins; [
+        wlrobs
+        obs-vaapi
+        obs-vkcapture
+        obs-pipewire-audio-capture
+      ];
+    };
     nm-applet.indicator = true;
     thunar.enable = true;
     thunar.plugins = with pkgs.xfce; [
@@ -156,9 +167,9 @@
     nfs.server.enable = false;
 
     openssh.enable = true;
-   
+
     fwupd.enable = true;
-    
+
     upower.enable = true;
   };
 }
