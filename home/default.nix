@@ -4,9 +4,9 @@
   imports = [
     ./shell.nix
     ./stylix.nix
-    ./scripts.nix
     ./development.nix
     ./programs
+    ./scripts
   ];
 
   nixpkgs.config.allowUnfree = true;
