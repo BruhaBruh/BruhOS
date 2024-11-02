@@ -5,6 +5,7 @@
     ./shell.nix
     ./stylix.nix
     ./scripts.nix
+    ./development.nix
     ./programs
   ];
 
