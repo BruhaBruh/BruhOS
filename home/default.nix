@@ -2,16 +2,10 @@
 
 {
   imports = [
-    ./git.nix
     ./shell.nix
     ./stylix.nix
     ./scripts.nix
-    ./hyprland.nix
-    ./hyprpaper.nix
-    ./waybar.nix
-    ./foot.nix
-    ./rofi.nix
-    ./vscode.nix
+    ./programs
   ];
 
   nixpkgs.config.allowUnfree = true;

@@ -13,15 +13,9 @@
         margin-right = 12;
         height = 24;
 
-        modules-left = [ "custom/apps" "hyprland/language" "clock" "hyprland/workspaces" ];
+        modules-left = [ "custom/apps" "hyprland/language" "custom/time" "custom/date" "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
         modules-right = [ "cpu" "temperature" "memory" "pulseaudio" "custom/logout" "custom/reboot" "custom/poweroff" ];
-
-        clock = {
-          format = "{:%H:%M:%S  %d.%m.%Y} ";
-          tooltip = false;
-          interval = 1;
-        };
 
         cpu = {
           interval = 10;
@@ -106,9 +100,50 @@
           on-click = "loginctl terminate-user $USER";
           tooltip = false;
         };
+
+        "custom/time" = {
+          exec = "date +\"%H:%M:%S \"";
+          interval = 1;
+          escape = true;
+          tooltip = false;
+        };
+
+        "custom/date" = {
+          exec = "date +\"%d.%m.%Y \"";
+          interval = 1;
+          escape = true;
+          tooltip = false;
+        };
       };
     };
     style = ''
+      @define-color rosewater #f4dbd6;
+      @define-color flamingo #f0c6c6;
+      @define-color pink #f5bde6;
+      @define-color mauve #c6a0f6;
+      @define-color red #ed8796;
+      @define-color maroon #ee99a0;
+      @define-color peach #f5a97f;
+      @define-color yellow #eed49f;
+      @define-color green #a6da95;
+      @define-color teal #8bd5ca;
+      @define-color sky #91d7e3;
+      @define-color sapphire #7dc4e4;
+      @define-color blue #8aadf4;
+      @define-color lavender #b7bdf8;
+      @define-color text #cad3f5;
+      @define-color subtext1 #b8c0e0;
+      @define-color subtext0 #a5adcb;
+      @define-color overlay2 #939ab7;
+      @define-color overlay1 #8087a2;
+      @define-color overlay0 #6e738d;
+      @define-color surface2 #5b6078;
+      @define-color surface1 #494d64;
+      @define-color surface0 #363a4f;
+      @define-color base #24273a;
+      @define-color mantle #1e2030;
+      @define-color crust #181926;
+
       * {
         border: none;
         border-radius: 0;
@@ -130,8 +165,10 @@
 
       #custom-apps,
       #language,
-      #clock,
+      #custom-time,
+      #custom-date,
       #window,
+      #custom-notification,
       #cpu,
       #temperature,
       #memory,
@@ -142,8 +179,8 @@
         margin-left: 4px;
         margin-right: 4px;
         padding: 0px 8px;
-        background: #cad3f5;
-        color: #24273a;
+        background: @text;
+        color: @base;
       }
 
       #custom-apps:hover,
@@ -155,14 +192,18 @@
       }
 
       #custom-apps {
-        background: #8aadf4;
+        background: @blue;
         min-width: 22px;
         padding: 0px;
         padding-right: 2px;
         transition: all .2s ease;
       }
 
-      #clock {
+      #custom-time {
+        padding-right: 10px;
+      }
+
+      #custom-date {
         padding-right: 12px;
       }
 
@@ -176,18 +217,18 @@
         margin-left: 2px;
         margin-right: 2px;
         min-width: 24px;
-        background: #494d64;
+        background: @base;
         box-shadow: inherit;
         transition: all .2s ease;
       }
 
       #workspaces button:hover {
-        background: #5b6078;
+        background: @surface0;
       }
 
       #workspaces button.active {
         min-width: 32px;
-        background: #cad3f5;
+        background: @text;
       }
 
       window#waybar.empty #window {
@@ -199,7 +240,7 @@
       }
 
       #temperature.critical {
-        background: #ed8796;
+        background: @red;
       }
 
       #memory {
@@ -212,7 +253,7 @@
       }
 
       #custom-logout {
-        background: #8aadf4;
+        background: @blue;
         min-width: 20px;
         padding: 0px;
         padding-right: 4px;
@@ -220,7 +261,7 @@
       }
 
       #custom-reboot {
-        background: #eed49f;
+        background: @yellow;
         min-width: 20px;
         padding: 0px;
         padding-right: 4px;
@@ -228,7 +269,7 @@
       }
 
       #custom-poweroff {
-        background: #ed8796;
+        background: @red;
         min-width: 21px;
         padding: 0px;
         padding-right: 3px;

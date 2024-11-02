@@ -12,6 +12,13 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
+      fullClean = '' 
+        nix-collect-garbage --delete-old
+
+        sudo nix-collect-garbage -d
+
+        sudo /run/current-system/bin/switch-to-configuration boot
+      '';
       rebuild = "sudo nixos-rebuild switch --flake ${vars.flakeDirectory}";
       sshtimeweb = "ssh root@46.19.67.148";
       sshpostnow = "ssh root@83.147.244.71";

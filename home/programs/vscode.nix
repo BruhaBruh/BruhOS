@@ -8,7 +8,7 @@
       bbenoist.nix
       jnoortheen.nix-ide
       bradlc.vscode-tailwindcss
-      catppuccin.catppuccin-vsc
+      # catppuccin.catppuccin-vsc
       catppuccin.catppuccin-vsc-icons
       # chadalen.vscode-jetbrains-icon-theme
       # csstools.postcss
@@ -52,12 +52,10 @@
       };
     };
     userSettings = {
-      "workbench.colorTheme" = "Catppuccin Macchiato";
       "workbench.iconTheme" = "catppuccin-macchiato";
       "editor.tabSize" = 2;
       "editor.indentSize" = "tabSize";
       "editor.lineHeight" = 1.5;
-      "editor.fontFamily" = "'JetBrainsMono Nerd Font', monospace";
       "editor.fontSize" = 16;
       "editor.fontLigatures" = false;
       "editor.fontVariations" = true;

@@ -6,7 +6,6 @@
     targets = {
       hyprland.enable = false;
       hyprpaper.enable = false;
-      vscode.enable = false;
       rofi.enable = false;
       waybar.enable = false;
     };

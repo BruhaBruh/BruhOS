@@ -1,7 +1,7 @@
 { pkgs, vars, ... }:
 
 let
-  configWallpapersDirectory = ../config/wallpapers;
+  configWallpapersDirectory = ../../config/wallpapers;
   wallpapersDirectory = "/home/${vars.username}/.config/wallpapers";
   defaultWallpaper = "${wallpapersDirectory}/minimalistic/darker_unicat.png";
   randomWallpaperScript = ''
