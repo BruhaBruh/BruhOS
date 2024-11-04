@@ -181,18 +181,17 @@
         margin-left: 4px;
         margin-right: 4px;
         padding: 0px 8px;
-        background: @base;
-        color: @text;
+        background: @text;
+        color: @base;
         transition: all 0.2s ease-in-out;
       }
 
       #workspaces button:hover {
-        background: @surface0;
+        background: @subtext1;
       }
 
       #workspaces button.active {
         padding: 0px 16px;
-        color: @base;
         background: radial-gradient(
           circle,
           @mauve 0%,
