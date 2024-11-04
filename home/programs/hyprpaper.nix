@@ -7,7 +7,7 @@ let
   randomWallpaperScript = ''
     wallpaper="${defaultWallpaper}"
 
-    wallpaper=$(find "${wallpapersDirectory}" -type l | shuf -n 1)
+    wallpaper=$(find "${wallpapersDirectory}" -type f,l | shuf -n 1)
 
     hyprctl hyprpaper preload "$wallpaper"
     hyprctl hyprpaper wallpaper ",$wallpaper"
