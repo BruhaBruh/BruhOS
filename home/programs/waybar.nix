@@ -9,37 +9,29 @@
         position = "top";
         margin-top = 8;
         margin-bottom = 0;
-        margin-left = 12;
-        margin-right = 12;
-        height = 24;
+        margin-left = 8;
+        margin-right = 8;
+        height = 28;
 
-        modules-left = [ "custom/apps" "hyprland/language" "custom/time" "custom/date" "hyprland/workspaces" ];
+        modules-left = [ "custom/apps" "custom/wallpaper" "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "cpu" "temperature" "memory" "pulseaudio" "custom/logout" "custom/reboot" "custom/poweroff" ];
+        modules-right = [ "custom/time" "custom/date" "custom/logout" "custom/reboot" "custom/poweroff" ];
 
-        cpu = {
-          interval = 10;
-          format = "{}% ";
+        "custom/apps" = {
+          format = "";
+          on-click = "rofi -show drun";
           tooltip = false;
         };
 
-        memory = {
-          interval = 30;
-          format = "{used:0.1f}G ";
+        "custom/wallpaper" = {
+          format = "";
+          on-click = "random_wallpaper";
           tooltip = false;
         };
 
-        temperature = {
-          critical-threshold = 80;
-          format = "{temperatureC}°C {icon}";
-          format-icons = [ "" "" "" "" "" ];
-          tooltip = false;
-        };
-
-        "hyprland/language" = {
-          format-en = "US";
-          format-ru = "RU";
-          tooltip = false;
+        "hyprland/workspaces" = {
+          all-outputs = true;
+          format = "{icon}";
         };
 
         "hyprland/window" = {
@@ -51,58 +43,8 @@
           separate-outputs = true;
         };
 
-        "hyprland/workspaces" = {
-          all-outputs = true;
-          format = "";
-        };
-
-        pulseaudio = {
-          reverse-scrolling = 1;
-          format = "{volume}% {icon}  {format_source}";
-          format-bluetooth = "{volume}% {icon} {format_source}";
-          format-bluetooth-muted = " {icon} {format_source}";
-          format-muted = " {format_source}";
-          format-source = "{volume}% ";
-          format-source-muted = "";
-          format-icons = {
-            headphone = "";
-            hands-free = "";
-            headset = "";
-            phone = "";
-            portable = "";
-            car = "";
-            default = [ "" "" "" ];
-          };
-          tooltip = false;
-          on-click = "pavucontrol";
-        };
-
-        "custom/apps" = {
-          format = "󰍜";
-          on-click = "rofi -show drun";
-          tooltip = false;
-        };
-
-        "custom/poweroff" = {
-          format = "⏻";
-          on-click = "poweroff";
-          tooltip = false;
-        };
-
-        "custom/reboot" = {
-          format = "";
-          on-click = "reboot";
-          tooltip = false;
-        };
-
-        "custom/logout" = {
-          format = "";
-          on-click = "loginctl terminate-user $USER";
-          tooltip = false;
-        };
-
         "custom/time" = {
-          exec = "date +\"%H:%M:%S \"";
+          exec = "date +\"%H:%M:%S \"";
           interval = 1;
           escape = true;
           tooltip = false;
@@ -112,6 +54,24 @@
           exec = "date +\"%d.%m.%Y \"";
           interval = 1;
           escape = true;
+          tooltip = false;
+        };
+
+        "custom/logout" = {
+          format = "";
+          on-click = "loginctl terminate-user $USER";
+          tooltip = false;
+        };
+
+        "custom/reboot" = {
+          format = "";
+          on-click = "reboot";
+          tooltip = false;
+        };
+
+        "custom/poweroff" = {
+          format = "";
+          on-click = "poweroff";
           tooltip = false;
         };
       };
@@ -150,7 +110,7 @@
         margin: 0px;
         /* `otf-font-awesome` is required to be installed for icons */
         font-family: 'JetBrainsMono Nerd Font', monospace;
-        font-weight: bold;
+        font-weight: bolder;
         font-size: 14px;
         border-radius: 9999px;
       }
@@ -159,67 +119,71 @@
         background: transparent;
       }
 
-      window#waybar.hidden {
-        opacity: 0.2;
-      }
-
       #custom-apps,
-      #language,
+      #custom-wallpaper,
+      #window,
       #custom-time,
       #custom-date,
-      #window,
-      #custom-notification,
-      #cpu,
-      #temperature,
-      #memory,
-      #pulseaudio,
       #custom-logout,
       #custom-reboot,
       #custom-poweroff {
-        margin-left: 4px;
-        margin-right: 4px;
-        padding: 0px 8px;
-        background: @text;
-        color: @base;
-      }
-
-      #custom-apps:hover,
-      #pulseaudio:hover,
-      #custom-logout:hover,
-      #custom-reboot:hover,
-      #custom-poweroff:hover {
-        opacity: 0.9;
+        margin-left: 8px;
+        margin-right: 8px;
+        padding: 0px 12px;
+        background: @base;
+        color: @text;
       }
 
       #custom-apps {
-        background: @blue;
-        min-width: 22px;
-        padding: 0px;
-        padding-right: 2px;
-        transition: all .2s ease;
+        background: linear-gradient(
+          45deg,
+          @blue 0%,
+          @sapphire 13%,
+          @sky 26%,
+          @lavender 34%,
+          @mauve 49%,
+          @blue 65%,
+          @sapphire 77%,
+          @lavender 88%,
+          @mauve 95%
+        );
+        color: @base;
+        background-size: 500% 500%;
+        animation: gradient 7s linear infinite;
+        padding-right: 16px;
       }
 
-      #custom-time {
-        padding-right: 10px;
-      }
-
-      #custom-date {
-        padding-right: 12px;
+      #custom-wallpaper {
+        background: linear-gradient(
+          45deg,
+          @green 0%,
+          @teal 13%,
+          @green 26%,
+          @teal 34%,
+          @green 49%,
+          @teal 65%,
+          @green 77%,
+          @teal 88%,
+          @green 95%
+        );
+        color: @base;
+        background-size: 500% 500%;
+        animation: gradient 7s linear infinite;
+        padding-right: 18px;
       }
 
       #workspaces {
-        margin: 0px 4px;
-        padding: 0px;
+        margin-left: 8px;
+        margin-right: 8px;
       }
 
       #workspaces button {
-        padding: 0px;
-        margin-left: 2px;
-        margin-right: 2px;
-        min-width: 24px;
+        margin-left: 4px;
+        margin-right: 4px;
+        padding: 0px 8px;
         background: @base;
-        box-shadow: inherit;
-        transition: all .2s ease;
+        color: @text;
+        transition: all 0.2s ease-in-out;
       }
 
       #workspaces button:hover {
@@ -227,53 +191,148 @@
       }
 
       #workspaces button.active {
-        min-width: 32px;
-        background: @text;
+        padding: 0px 16px;
+        color: @base;
+        background: radial-gradient(
+          circle,
+          @mauve 0%,
+          @lavender 12%,
+          @yellow 19%,
+          @mauve 20%,
+          @mauve 24%,
+          @teal 36%,
+          @lavender 37%,
+          @sapphire 48%,
+          @text 52%,
+          @blue 52%,
+          @blue 59%,
+          @green 66%,
+          @lavender 67%,
+          @lavender 68%,
+          @subtext1 77%,
+          @green 78%,
+          @blue 82%,
+          @lavender 83%,
+          @blue 90%,
+          @blue 100%
+        );
+        background-size: 400% 400%;
+        animation: gradient_f 20s ease-in-out infinite;
+      }
+
+      #window {
+        color: @base;
+        background: radial-gradient(
+          circle,
+          @green 0%,
+          @teal 21%, 
+          @yellow 34%,
+          @mauve 35%, 
+          @sapphire 59%, 
+          @green 74%, 
+          @lavender 74%, 
+          @blue 100%
+        );
+        background-size: 400% 400%;
+        animation: gradient_f 4s ease infinite;
+        transition: all 0.1s ease-in-out;
       }
 
       window#waybar.empty #window {
-        background: transparent;
+        padding: 0;
       }
 
-      #cpu {
-        padding-right: 14px;
+      #custom-time {
+        background: @text;
+        color: @base;
+        padding-right: 18px;
       }
 
-      #temperature.critical {
-        background: @red;
-      }
-
-      #memory {
+      #custom-date {
+        background: @text;
+        color: @base;
         padding-right: 16px;
       }
 
-      #pulseaudio {
-        padding-right: 9px;
-        transition: all .2s ease;
-      }
-
       #custom-logout {
-        background: @blue;
-        min-width: 20px;
-        padding: 0px;
-        padding-right: 4px;
-        transition: all .2s ease;
+        background: linear-gradient(
+          45deg,
+          @blue 0%,
+          @sapphire 13%,
+          @sky 26%,
+          @lavender 34%,
+          @mauve 49%,
+          @blue 65%,
+          @sapphire 77%,
+          @lavender 88%,
+          @mauve 95%
+        );
+        color: @base;
+        background-size: 500% 500%;
+        animation: gradient 7s linear infinite;
+        padding-right: 17px;
       }
 
       #custom-reboot {
-        background: @yellow;
-        min-width: 20px;
-        padding: 0px;
-        padding-right: 4px;
-        transition: all .2s ease;
+        background: linear-gradient(
+          45deg,
+          @yellow 0%,
+          @peach 13%,
+          @yellow 26%,
+          @peach 34%,
+          @yellow 49%,
+          @peach 65%,
+          @yellow 77%,
+          @peach 88%,
+          @yellow 95%
+        );
+        color: @base;
+        background-size: 500% 500%;
+        animation: gradient 7s linear infinite;
+        padding-right: 17px;
       }
 
       #custom-poweroff {
-        background: @red;
-        min-width: 21px;
-        padding: 0px;
-        padding-right: 3px;
-        transition: all .2s ease;
+        background: linear-gradient(
+          45deg,
+          @red 0%,
+          @maroon 13%,
+          @red 26%,
+          @maroon 34%,
+          @red 49%,
+          @maroon 65%,
+          @red 77%,
+          @maroon 88%,
+          @red 95%
+        );
+        color: @base;
+        background-size: 500% 500%;
+        animation: gradient 7s linear infinite;
+        padding-right: 17px;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 30%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes gradient_f {
+        0% {
+          background-position: 0% 200%;
+        }
+        50% {
+          background-position: 200% 0%;
+        }
+        100% {
+          background-position: 400% 200%;
+        }
       }
     '';
   };

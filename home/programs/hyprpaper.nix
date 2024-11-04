@@ -3,15 +3,11 @@
 let
   configWallpapersDirectory = ../../config/wallpapers;
   wallpapersDirectory = "/home/${vars.username}/.config/wallpapers";
-  defaultWallpaper = "${wallpapersDirectory}/minimalistic/darker_unicat.png";
+  defaultWallpaper = "${wallpapersDirectory}/1.jpg";
   randomWallpaperScript = ''
-    wallpaper="${wallpapersDirectory}/minimalistic/darker_unicat.png"
+    wallpaper="${defaultWallpaper}"
 
-    folders=("custom" "flatppuccin" "gradients" "minimalistic" "os")
-
-    selected_folder=''${folders[$((RANDOM % ''${#folders[@]}))]}
-
-    wallpaper=$(find "${wallpapersDirectory}/$selected_folder" -type l | shuf -n 1)
+    wallpaper=$(find "${wallpapersDirectory}" -type l | shuf -n 1)
 
     hyprctl hyprpaper preload "$wallpaper"
     hyprctl hyprpaper wallpaper ",$wallpaper"

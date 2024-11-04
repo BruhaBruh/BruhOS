@@ -122,8 +122,8 @@
         gaps_out = 16;
         border_size = 2;
         resize_on_border = true;
-        "col.active_border" = "rgba($BLUE_ALPHAee) rgba($SKY_ALPHAee) 45deg";
-        "col.inactive_border" = "rgba($SURFACE2_ALPHAaa)";
+        "col.active_border" = "rgba($MAUVE_ALPHAff) rgba($BLUE_ALPHAff) rgba($TEAL_ALPHAff) 10deg";
+        "col.inactive_border" = "rgba($OVERLAY0_ALPHA5a)";
 
         layout = "dwindle";
       };

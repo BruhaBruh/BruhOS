@@ -11,6 +11,10 @@
     };
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    initExtra = ''
+      PROMPT="%F{green}%~%f %F{blue}%f "
+      RPROMPT="%F{7}%?%f - %F{7}%T%f"
+    '';
     shellAliases = {
       fullClean = '' 
         nix-collect-garbage --delete-old

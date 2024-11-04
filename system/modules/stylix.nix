@@ -4,7 +4,7 @@
   stylix = {
     enable = true;
     autoEnable = true;
-    image = ../../config/wallpapers/os/nix-black-4k.png;
+    image = ../../config/wallpapers/1.jpg;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
     cursor = {
       name = "catppuccin-macchiato-dark-cursors";

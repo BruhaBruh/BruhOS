@@ -107,9 +107,9 @@
 
   programs = {
     chromium.enable = true;
-    zsh.enable = true;
     waybar.enable = true;
     git.enable = true;
+    zsh.enable = true;
     obs-studio = {
       enable = true;
       plugins = with pkgs-stable.obs-studio-plugins; [

@@ -8,16 +8,12 @@
       bbenoist.nix
       jnoortheen.nix-ide
       bradlc.vscode-tailwindcss
-      # catppuccin.catppuccin-vsc
       catppuccin.catppuccin-vsc-icons
-      # chadalen.vscode-jetbrains-icon-theme
-      # csstools.postcss
       dbaeumer.vscode-eslint
       eamodio.gitlens
       github.github-vscode-theme
       k--kato.intellij-idea-keybindings
       ms-ceintl.vscode-language-pack-ru
-      # rvest.vs-code-prettier-eslint
     ];
     languageSnippets = {
       typescriptreact = {
@@ -116,22 +112,12 @@
         "*.s3db" = "\${capture}.\${extname}-*";
       };
       "files.autoSave" = "off";
-      "vs-code-prettier-eslint.prettierLast" = false;
-      "cSpell.language" = "en,ru";
-      "cSpell.userWords" = [ ];
       "security.workspace.trust.untrustedFiles" = "open";
-      "prisma.showPrismaDataPlatformNotification" = false;
-      "[prisma]" = {
-        "editor.defaultFormatter" = "Prisma.prisma";
-      };
       "eslint.format.enable" = true;
       "[json]" = {
         "editor.defaultFormatter" = "vscode.json-language-features";
       };
       "eslint.useFlatConfig" = true;
-      "[mdx]" = {
-        "editor.defaultFormatter" = "rvest.vs-code-prettier-eslint";
-      };
       "tailwindCSS.experimental.classRegex" = [
         [ "cva\\(([^)]*)\\)" "[\"'`]([^\"'`]*).*?[\"'`]" ]
         [ "cx\\(([^)]*)\\)" "(?:'|\"|`)([^']*)(?:'|\"|`)" ]
