@@ -226,9 +226,15 @@
         "$mainMod, Q, exec, foot"
         "$mainMod, R, exec, rofi -show drun"
         "$mainMod, E, exec, thunar"
-        "$mainMod, C, killactive,"
-        "$mainMod, M, exit,"
-        "$mainMod, F, togglefloating,"
+        "$mainMod, F, togglefloating"
+        "$mainMod, C, centerwindow"
+        "$mainMod, M, fullscreen, 1"
+        "$mainMod, P, pin"
+
+        "$mainMod CTRL, C, killactive,"
+        "$mainMod CTRL, L, exec, exit"
+        "$mainMod CTRL, R, exec, reboot"
+        "$mainMod CTRL, P, exec, poweroff"
 
         # Move focus with mainMod + arrow keys
         "$mainMod, left,  movefocus, l"
@@ -291,7 +297,8 @@
         ", XF86MonBrightnessUp, exec, brightnessctl set +5% "
 
         # Screenshot
-        ''$mainMod SHIFT, S, exec, grim -g "$(slurp)" - | wl-copy''
+        ''$mainMod, S, exec, grim - | wl-copy && notify-send "Screenshot" "Fullscreen screenshot saved to clipboard"''
+        ''$mainMod SHIFT, S, exec, grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Screenshot saved to clipboard"''
 
         # Waybar
         "$mainMod, B, exec, pkill -SIGUSR1 waybar"
