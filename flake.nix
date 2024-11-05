@@ -44,13 +44,21 @@
           email = "drugsho.jaker@gmail.com";
           defaultBranch = "main";
         };
+
+        configWallpapersDirectory = ./config/wallpapers;
+        wallpapersDirectory = "/home/${vars.username}/.config/wallpapers";
+        defaultWallpaper = "${vars.wallpapersDirectory}/1.jpg";
+      };
+
+      scripts = import ./scripts {
+        inherit lib system pkgs pkgs-stable vars inputs;
       };
     in
     {
-      nixosConfigurations.${vars.hostName} = lib.nixosSystem {
+      nixosConfigurations.${ vars.hostName} = lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit pkgs-stable vars inputs system;
+          inherit pkgs-stable vars inputs system scripts;
         };
         modules = [
           stylix.nixosModules.stylix
@@ -58,7 +66,7 @@
           home-manager.nixosModules.home-manager
           {
             home-manager.extraSpecialArgs = {
-              inherit pkgs-stable vars inputs system;
+              inherit pkgs-stable vars inputs system scripts;
             };
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

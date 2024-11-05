@@ -1,8 +1,12 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   programs.waybar = {
     enable = true;
+    systemd = {
+      enable = false;
+      target = "hyprland-session.target";
+    };
     settings = {
       mainBar = {
         layer = "top";
@@ -25,7 +29,7 @@
 
         "custom/wallpaper" = {
           format = "";
-          on-click = "random_wallpaper";
+          on-click = "randomwallpaper";
           tooltip = false;
         };
 

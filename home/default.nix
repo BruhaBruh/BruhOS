@@ -5,8 +5,8 @@
     ./shell.nix
     ./stylix.nix
     ./development.nix
+    ./scripts.nix
     ./programs
-    ./scripts
   ];
 
   nixpkgs.config.allowUnfree = true;

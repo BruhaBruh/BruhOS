@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   wayland.windowManager.hyprland = {
@@ -232,7 +232,7 @@
         "$mainMod, P, pin"
 
         "$mainMod CTRL, C, killactive,"
-        "$mainMod CTRL, L, exec, exit"
+        "$mainMod CTRL, L, exit"
         "$mainMod CTRL, R, exec, reboot"
         "$mainMod CTRL, P, exec, poweroff"
 
@@ -302,7 +302,7 @@
 
         # Waybar
         "$mainMod, B, exec, pkill -SIGUSR1 waybar"
-        "$mainMod, W, exec, pkill -SIGUSR2 waybar"
+        "$mainMod, W, exec, pkill -SIGUSR2 waybar && systemctl --user stop waybar.service"
       ];
 
       # Move/resize windows with mainMod + LMB/RMB and dragging

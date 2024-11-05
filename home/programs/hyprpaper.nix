@@ -1,33 +1,16 @@
-{ pkgs, vars, ... }:
+{ pkgs, vars, scripts, ... }:
 
-let
-  configWallpapersDirectory = ../../config/wallpapers;
-  wallpapersDirectory = "/home/${vars.username}/.config/wallpapers";
-  defaultWallpaper = "${wallpapersDirectory}/1.jpg";
-  randomWallpaperScript = ''
-    wallpaper="${defaultWallpaper}"
-
-    wallpaper=$(find "${wallpapersDirectory}" -type f,l | shuf -n 1)
-
-    hyprctl hyprpaper preload "$wallpaper"
-    hyprctl hyprpaper wallpaper ",$wallpaper"
-  '';
-in
 {
   services.hyprpaper = {
     enable = true;
     settings = {
-      preload = "${defaultWallpaper}";
-      wallpaper = ", ${defaultWallpaper}";
+      preload = "${vars.defaultWallpaper}";
+      wallpaper = ", ${vars.defaultWallpaper}";
     };
   };
 
-  home.packages = with pkgs; [
-    (pkgs.writeShellScriptBin "random_wallpaper" ''${randomWallpaperScript}'')
-  ];
-
   home.file.".config/wallpapers" = {
-    source = configWallpapersDirectory;
+    source = vars.configWallpapersDirectory;
     recursive = true;
   };
 
@@ -51,7 +34,7 @@ in
       };
       Service = {
         Type = "oneshot";
-        ExecStart = "${pkgs.writeShellScript "random_wallpaper" ''${randomWallpaperScript}''}";
+        ExecStart = "${scripts.randomwallpaper}/bin/randomwallpaper";
       };
     };
   };
