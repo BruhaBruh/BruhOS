@@ -19,11 +19,11 @@
 
         modules-left = [ "custom/apps" "custom/wallpaper" "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "custom/time" "custom/date" "custom/logout" "custom/reboot" "custom/poweroff" ];
+        modules-right = [ "custom/time" "custom/date" "custom/uptime" "custom/powermenu" ];
 
         "custom/apps" = {
           format = "";
-          on-click = "rofi -show drun";
+          on-click = "rofi -show drun -theme $HOME/.config/rofi/default.rasi";
           tooltip = false;
         };
 
@@ -61,21 +61,16 @@
           tooltip = false;
         };
 
-        "custom/logout" = {
-          format = "";
-          on-click = "loginctl terminate-user $USER";
+        "custom/uptime" = {
+          exec = "uptime | sed -E 's/.*up +([^,]+),.*/\\1/'";
+          interval = 1;
+          escape = true;
           tooltip = false;
         };
 
-        "custom/reboot" = {
-          format = "";
-          on-click = "reboot";
-          tooltip = false;
-        };
-
-        "custom/poweroff" = {
+        "custom/powermenu" = {
           format = "";
-          on-click = "poweroff";
+          on-click = "powermenu";
           tooltip = false;
         };
       };
@@ -128,9 +123,8 @@
       #window,
       #custom-time,
       #custom-date,
-      #custom-logout,
-      #custom-reboot,
-      #custom-poweroff {
+      #custom-uptime,
+      #custom-powermenu {
         margin-left: 8px;
         margin-right: 8px;
         padding: 0px 12px;
@@ -257,45 +251,12 @@
         padding-right: 16px;
       }
 
-      #custom-logout {
-        background: linear-gradient(
-          45deg,
-          @blue 0%,
-          @sapphire 13%,
-          @sky 26%,
-          @lavender 34%,
-          @mauve 49%,
-          @blue 65%,
-          @sapphire 77%,
-          @lavender 88%,
-          @mauve 95%
-        );
+      #custom-uptime {
+        background: @text;
         color: @base;
-        background-size: 500% 500%;
-        animation: gradient 7s linear infinite;
-        padding-right: 17px;
       }
 
-      #custom-reboot {
-        background: linear-gradient(
-          45deg,
-          @yellow 0%,
-          @peach 13%,
-          @yellow 26%,
-          @peach 34%,
-          @yellow 49%,
-          @peach 65%,
-          @yellow 77%,
-          @peach 88%,
-          @yellow 95%
-        );
-        color: @base;
-        background-size: 500% 500%;
-        animation: gradient 7s linear infinite;
-        padding-right: 17px;
-      }
-
-      #custom-poweroff {
+      #custom-powermenu {
         background: linear-gradient(
           45deg,
           @red 0%,

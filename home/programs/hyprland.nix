@@ -134,7 +134,7 @@
         blur = {
           enabled = true;
           size = 16;
-          passes = 2;
+          passes = 4;
           new_optimizations = true;
         };
 
@@ -202,10 +202,14 @@
         "workspace 9,initialTitle:^(Spotify)$"
         "workspace 10,initialClass:^(nekoray)$"
 
-        "float,initialTitle:^Картинка в картинке$"
-        "size 450 254,initialTitle:^Картинка в картинке$"
-        "move 100%-w-16 100%-w-16,initialTitle:^Картинка в картинке$"
-        "pin,initialTitle:^Картинка в картинке$"
+        "pin,initialClass:^(Rofi)$"
+        "stayfocused,initialClass:^(Rofi)$"
+        "noblur,initialClass:^(Rofi)$"
+
+        "float,initialTitle:^(Картинка в картинке)$"
+        "size 450 254,initialTitle:^(Картинка в картинке)$"
+        "move 100%-w-16 100%-w-16,initialTitle:^(Картинка в картинке)$"
+        "pin,initialTitle:^(Картинка в картинке)$"
       ];
 
       exec-once = [
@@ -224,7 +228,8 @@
 
       bind = [
         "$mainMod, Q, exec, foot"
-        "$mainMod, R, exec, rofi -show drun"
+        "$mainMod, R, exec, powermenu"
+        "$mainMod, SPACE, exec, rofi -show drun -theme $HOME/.config/rofi/default.rasi"
         "$mainMod, E, exec, thunar"
         "$mainMod, F, togglefloating"
         "$mainMod, C, centerwindow"
@@ -233,8 +238,8 @@
 
         "$mainMod CTRL, C, killactive,"
         "$mainMod CTRL, L, exit"
-        "$mainMod CTRL, R, exec, reboot"
-        "$mainMod CTRL, P, exec, poweroff"
+        "$mainMod CTRL, R, exec, systemctl reboot"
+        "$mainMod CTRL, P, exec, systemctl poweroff"
 
         # Move focus with mainMod + arrow keys
         "$mainMod, left,  movefocus, l"

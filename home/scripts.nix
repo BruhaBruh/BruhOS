@@ -4,5 +4,6 @@
   home.packages = with scripts; [
     openproject
     randomwallpaper
+    powermenu
   ];
 }

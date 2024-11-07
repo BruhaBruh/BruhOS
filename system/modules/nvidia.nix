@@ -1,5 +1,9 @@
 { config, pkgs, ... }: {
   boot = {
+    blacklistedKernelModules = [
+      "i2c_nvidia_gpu"
+    ];
+    kernelParams = [ "nvidia-drm.modeset=1" "pci=noaer" ];
     initrd.kernelModules = [ "nvidia" ];
     extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   };

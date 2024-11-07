@@ -65,7 +65,7 @@
     qt6ct
     qt6.qtwayland
     qt6Packages.qtstyleplugin-kvantum
-    rofi-wayland
+    rofi #-wayland
     slurp
     swaynotificationcenter
     yad
