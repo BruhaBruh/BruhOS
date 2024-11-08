@@ -83,47 +83,70 @@ fi
 
 echo
 
-echo "$NOTE Available disks:"
-echo -e "$(fdisk -l | grep -E "^Disk /dev/[a-z]+:" | sed -E 's#^Disk\s+(/dev/[a-z]+: [^,]+B),.*#\t\1#')"
-input "Enter disk to format" disk "/dev/sda"
+question "You want to format disk?" answer
 
-echo
+if [[ "$answer" == "true" ]]; then
+  echo
 
-question "Selected disk is $YELLOW$disk$RESET. It's right?" answer
-if [[ "$answer" == "false" ]]; then
-  echo "$ERROR Invalid disk"
-  exit
+  echo "$NOTE Available disks:"
+  echo -e "$(fdisk -l | grep -E "^Disk /dev/[a-z]+:" | sed -E 's#^Disk\s+(/dev/[a-z]+: [^,]+B),.*#\t\1#')"
+  input "Enter disk to format" disk "/dev/sda"
+
+  echo
+
+  question "Selected disk is $YELLOW$disk$RESET. It's right?" answer
+  if [[ "$answer" == "false" ]]; then
+    echo "$ERROR Invalid disk"
+    exit
+  fi
+
+  echo
+
+  echo "$ACTION Create disko.nix for $YELLOW$disk$RESET disk"
+
+  if [[ -f "./disko.nix" ]]; then
+    echo "$WARN disko.nix exists. Backup to disko.nix.bkp"
+    mv disko.nix disko.nix.bkp
+  fi
+
+  curl -s -S -L https://github.com/BruhaBruh/nixos-dots/raw/main/disko.nix > disko.nix
+
+  sed -i "s|/dev/sda|$disk|g" ./disko.nix
+
+  echo
+
+  strict_question "You are not stupid? Selected disk is $YELLOW$disk" answer
+  if [[ "$answer" == "false" ]]; then
+    echo "$ERROR Invalid disk"
+    exit
+  fi
+
+  echo
+
+  echo "$ACTION Format selected disk by disko"
+  sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko ./disko.nix
+
+  echo
+
+  echo "$OK Disk is formatted"
+else
+  echo
+  question "Did you format the disk?" answer
+  if [[ "$answer" == "false" ]]; then
+    echo "$NOTE To format disk use:"
+    echo "$NOTE   $ parted /dev/sd# -- mklabel gpt"
+    echo "$NOTE   $ parted /dev/sd# -- mkpart root btrfs 512MB 100%"
+    echo "$NOTE   $ parted /dev/sd# -- mkpart ESP fat32 1MB 512MB"
+    echo "$NOTE   $ parted /dev/sd# -- set 2 esp on"
+    echo "$NOTE   $ parted /dev/sd# -- set 2 esp on"
+    echo "$NOTE   $ mkfs.btrfs -L nixos /dev/sd#1"
+    echo "$NOTE   $ mkfs.fat -F 32 -n boot /dev/sd#2"
+    echo "$NOTE   $ mount /dev/disk/by-label/nixos /mnt"
+    echo "$NOTE   $ mkdir -p /mnt/boot"
+    echo "$NOTE   $ mount -o umask=077 /dev/disk/by-label/boot /mnt/boot"
+    exit
+  fi
 fi
-
-echo
-
-echo "$ACTION Create disko.nix for $YELLOW$disk$RESET disk"
-
-if [[ -f "./disko.nix" ]]; then
-  echo "$WARN disko.nix exists. Backup to disko.nix.bkp"
-  mv disko.nix disko.nix.bkp
-fi
-
-curl -s -S -L https://github.com/BruhaBruh/nixos-dots/raw/main/disko.nix > disko.nix
-
-sed -i "s|/dev/sda|$disk|g" ./disko.nix
-
-echo
-
-strict_question "You are not stupid? Selected disk is $YELLOW$disk" answer
-if [[ "$answer" == "false" ]]; then
-  echo "$ERROR Invalid disk"
-  exit
-fi
-
-echo
-
-echo "$ACTION Format selected disk by disko"
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko ./disko.nix
-
-echo
-
-echo "$OK Disk is formatted"
 
 echo
 
