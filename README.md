@@ -3,13 +3,13 @@
 </h1>
 
 <h6 align="center">
-  <a href="#installation">Installation</a>
+  <a href="#ℹ%EF%B8%8F-info">Information</a>
   ·
-  <a href="#info">Information</a>
+  <a href="#%EF%B8%8F-installation">Installation</a>
   ·
-  <a href="#screenshots">Screenshots</a>
+  <a href="#%EF%B8%8F-screenshots">Screenshots</a>
   ·
-  <a href="#documentation">Documentation</a>
+  <a href="#-documentation">Documentation</a>
 </h6>
 
 <h3 align="center">
@@ -20,11 +20,10 @@
   <img src="https://raw.githubusercontent.com/BruhaBruh/BruhOS/main/assets/macchiato.png" width="400" />
 </p>
 
-### Info
+### ℹ️ Info
 
-- RAM usage on startup: ~180mb
 - Package count: 📦 1947
-- Uses the catppuccin macchiato theme
+- Uses the Catppuccin Macchiato theme
 - Terminal emulator: 🦶 foot
 - Window manager: 🌿 Hyprland
 - Shell: 🐚 zsh
@@ -32,7 +31,7 @@
 - Browser: 🦊 Zen Browser
 - Other: rofi, Hyprpaper, Hyprpicker, swaync
 
-### Installation
+### 🛠️ Installation
 
 #### 1. Install NixOS
 
@@ -60,16 +59,16 @@ Log in to the user and run the command below
 sh <(curl -L https://github.com/BruhBruh/BruhOS/raw/main/install.sh)
 ```
 
-### Screenshots
+### 🖼️ Screenshots
 
 ![Screenshot 1](https://raw.githubusercontent.com/BruhaBruh/BruhOS/main/assets/screenshot0.jpg)
 ![Screenshot 2](https://raw.githubusercontent.com/BruhaBruh/BruhOS/main/assets/screenshot1.jpg)
 
-### Documentation
+### 📚 Documentation
 
 #### Key bindings
 
-`SUPER` - is Win key
+`SUPER` - is Win key by default
 
 - `SUPER + Q` - Run terminal
 - `SUPER + SPACE` - Run rofi
