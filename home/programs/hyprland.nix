@@ -207,9 +207,10 @@
         "noblur,initialClass:^(Rofi)$"
 
         "float,initialTitle:^(Картинка в картинке)$"
-        "size 450 254,initialTitle:^(Картинка в картинке)$"
+        "size 854 480,initialTitle:^(Картинка в картинке)$"
         "move 100%-w-16 100%-w-16,initialTitle:^(Картинка в картинке)$"
         "pin,initialTitle:^(Картинка в картинке)$"
+        "keepaspectratio,initialTitle:^(Картинка в картинке)$"
       ];
 
       exec-once = [
@@ -228,7 +229,6 @@
 
       bind = [
         "$mainMod, Q, exec, foot"
-        "$mainMod, R, exec, powermenu"
         "$mainMod, SPACE, exec, rofi -show drun -theme $HOME/.config/rofi/default.rasi"
         "$mainMod, E, exec, thunar"
         "$mainMod, F, togglefloating"
@@ -237,9 +237,9 @@
         "$mainMod, P, pin"
 
         "$mainMod CTRL, C, killactive,"
-        "$mainMod CTRL, L, exit"
-        "$mainMod CTRL, R, exec, systemctl reboot"
-        "$mainMod CTRL, P, exec, systemctl poweroff"
+        "$mainMod CTRL, L, exec, powermenu --logout"
+        "$mainMod CTRL, R, exec, powermenu --reboot"
+        "$mainMod CTRL, P, exec, powermenu --shutdown"
 
         # Move focus with mainMod + arrow keys
         "$mainMod, left,  movefocus, l"
@@ -287,19 +287,14 @@
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
 
-        # Keyboard backlight
-        "$mainMod, F3, exec, brightnessctl -d *::kbd_backlight set +33%"
-        "$mainMod, F2, exec, brightnessctl -d *::kbd_backlight set 33%-"
-
         # Volume and Media Control
         ", XF86AudioRaiseVolume, exec, pamixer -i 5 "
         ", XF86AudioLowerVolume, exec, pamixer -d 5 "
         ", XF86AudioMute, exec, pamixer -t"
         ", XF86AudioMicMute, exec, pamixer --default-source -m"
 
-        # Brightness control
-        ", XF86MonBrightnessDown, exec, brightnessctl set 5%- "
-        ", XF86MonBrightnessUp, exec, brightnessctl set +5% "
+        # Color Picker
+        "$mainMod, R, exec, color=$(hyprpicker -a -f hex) && notify-send \"Color picker\" \"Picked color <span foreground=\\\"$color\\\">$color</span>\""
 
         # Screenshot
         ''$mainMod, S, exec, grim - | wl-copy && notify-send "Screenshot" "Fullscreen screenshot saved to clipboard"''

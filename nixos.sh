@@ -69,7 +69,7 @@ strict_question() {
   fi
 }
 
-echo "$NOTE BruhaBruh NixOS Dots"
+echo "$NOTE BruhOS"
 echo "$NOTE Default values is ${GRAY}GRAY"
 
 echo
@@ -105,11 +105,12 @@ if [[ "$answer" == "true" ]]; then
   echo "$ACTION Create disko.nix for $YELLOW$disk$RESET disk"
 
   if [[ -f "./disko.nix" ]]; then
-    echo "$WARN disko.nix exists. Backup to disko.nix.bkp"
-    mv disko.nix disko.nix.bkp
+    backupname=$(date "+%H-%M-%S-%d-%m-%Y")
+    echo "$WARN disko.nix exists. Backup to disko-$backupname.nix"
+    mv disko.nix disko-$backupname.bkp
   fi
 
-  curl -s -S -L https://github.com/BruhaBruh/nixos-dots/raw/main/disko.nix > disko.nix
+  curl -s -S -L https://github.com/BruhaBruh/BruhOS/raw/main/disko.nix > disko.nix
 
   sed -i "s|/dev/sda|$disk|g" ./disko.nix
 
@@ -170,7 +171,7 @@ cp ./disko.nix /mnt/etc/nixos/disko.nix
 echo
 
 echo "$ACTION Download configuration.nix"
-curl -s -S -L https://github.com/BruhaBruh/nixos-dots/raw/main/configuration.nix > /mnt/etc/nixos/configuration.nix
+curl -s -S -L https://github.com/BruhaBruh/BruhOS/raw/main/configuration.nix > /mnt/etc/nixos/configuration.nix
 
 echo
 
@@ -190,21 +191,11 @@ echo "$OK Configuration is generated"
 
 echo
 
-strict_question "Create user and run nixos-install?" answer
+strict_question "Run nixos-install?" answer
 if [[ "$answer" == "false" ]]; then
-  echo "$NOTE To install NixOS use: useradd -m $username && passwd $username && nixos-install"
+  echo "$NOTE To install NixOS use: nixos-install"
   exit
 fi
-
-echo "$ACTION Create user $username"
-
-useradd -m $username
-
-passwd $username
-
-echo
-
-echo "$OK User is created"
 
 echo
 

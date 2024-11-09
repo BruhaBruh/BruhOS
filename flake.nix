@@ -45,6 +45,8 @@
           defaultBranch = "main";
         };
 
+        enableProxy = false;
+
         configWallpapersDirectory = ./config/wallpapers;
         wallpapersDirectory = "/home/${vars.username}/.config/wallpapers";
         defaultWallpaper = "${vars.wallpapersDirectory}/1.jpg";

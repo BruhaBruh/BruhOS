@@ -19,7 +19,7 @@
 
         modules-left = [ "custom/apps" "custom/wallpaper" "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "custom/time" "custom/date" "custom/uptime" "custom/powermenu" ];
+        modules-right = [ "custom/time" "custom/date" "custom/powermenu" ];
 
         "custom/apps" = {
           format = "";

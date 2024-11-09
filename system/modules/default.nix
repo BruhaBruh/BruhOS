@@ -19,6 +19,7 @@
     ./trim.nix
     ./bluetooth.nix
     ./packages.nix
+    ./virtualisation.nix
     ./font.nix
     ./stylix.nix
   ];

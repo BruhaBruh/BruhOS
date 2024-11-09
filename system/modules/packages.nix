@@ -15,6 +15,10 @@
     # VPN
     nekoray
 
+    # Docker
+    docker
+    docker-compose
+
     # CLI
     curl
     wget
@@ -65,7 +69,7 @@
     qt6ct
     qt6.qtwayland
     qt6Packages.qtstyleplugin-kvantum
-    rofi #-wayland
+    rofi
     slurp
     swaynotificationcenter
     yad
@@ -79,6 +83,7 @@
     playerctl
 
     # System Packages
+    fzf
     baobab
     clang
     duf
@@ -127,8 +132,8 @@
       thunar-archive-plugin
       thunar-volman
       tumbler
+      xfce4-settings
     ];
-    virt-manager.enable = true;
     xwayland.enable = true;
     dconf.enable = true;
     seahorse.enable = true;

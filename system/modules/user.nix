@@ -16,6 +16,7 @@
         "libvirtd"
         "video"
         "audio"
+        "docker"
       ];
       packages = with pkgs; [ ];
     };

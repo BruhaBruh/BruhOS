@@ -1,24 +1,22 @@
 { config, pkgs, ... }: {
-  boot = {
-    blacklistedKernelModules = [
-      "i2c_nvidia_gpu"
-    ];
-    initrd.kernelModules = [ "nvidia" ];
-    extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
-  };
+  # Specific for my pc. You can comment boot.blacklistedKernelModules
+  boot.blacklistedKernelModules = [
+    "i2c_nvidia_gpu"
+    "ucsi_ccg"
+  ];
 
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    extraPackages = with pkgs; [
-      vaapiVdpau
-      libvdpau
-      libvdpau-va-gl
-      nvidia-vaapi-driver
-      vdpauinfo
-      libva
-      libva-utils
-    ];
+    # extraPackages = with pkgs; [
+    #   vaapiVdpau
+    #   libvdpau
+    #   libvdpau-va-gl
+    #   nvidia-vaapi-driver
+    #   vdpauinfo
+    #   libva
+    #   libva-utils
+    # ];
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];

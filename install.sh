@@ -69,7 +69,7 @@ strict_question() {
   fi
 }
 
-echo "$NOTE BruhaBruh NixOS Dots"
+echo "$NOTE BruhOS"
 echo "$NOTE Default values is ${GRAY}GRAY"
 
 echo
@@ -105,7 +105,7 @@ echo
 if [[ -d "$flakeDirectory" ]]; then
   question "Dot files exists. Do you want to backup?" answer
   if [[ "$answer" == "true" ]]; then
-    backupname=$(date "+%Y-%m-%d-%H-%M-%S")
+    backupname=$(date "+%H-%M-%S-%d-%m-%Y")
     echo "$NOTE Dot files exists. backing up to ${flakeDirectory}-${backupname}"
     mv "$flakeDirectory" "$flakeDirectory-$backupname"
     sleep 1
@@ -114,8 +114,8 @@ fi
 
 echo
 
-echo "$ACTION Cloning nixos-dots Repository & entering"
-git clone https://github.com/BruhaBruh/nixos-dots.git $flakeDirectory
+echo "$ACTION Cloning BruhOS Repository & entering"
+git clone https://github.com/BruhaBruh/BruhOS.git $flakeDirectory
 cd $flakeDirectory || exit
 
 sed -i "s|flakeDirectory = \"\$HOME/.dotfiles\"|flakeDirectory = \"$flakeDirectory\"|g" flake.nix

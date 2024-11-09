@@ -5,5 +5,6 @@
     openproject
     randomwallpaper
     powermenu
+    journallog
   ];
 }
