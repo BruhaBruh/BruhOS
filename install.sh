@@ -172,6 +172,21 @@ sed -i "s|defaultBranch = \".*\"|defaultBranch = \"$gitDefaultBranch\"|g" flake.
 
 echo
 
+question "Enable random wallpaper service?" enableRandomWallpaperService
+if [[ "$enableRandomWallpaperService" == "true" ]]; then
+  sed -i "s|enabled = .*;|enabled = true;|g" flake.nix
+
+  echo
+
+  input "Enter interval for random wallpaper in minutes" randomWallpaperInterval "1"
+  
+  sed -i "s|interval = .*;|interval = $randomWallpaperInterval;|g" flake.nix
+else
+  sed -i "s|enabled = .*;|enabled = false;|g" flake.nix
+fi
+
+echo
+
 echo "$ACTION Generating The Hardware Configuration"
 sudo nixos-generate-config --show-hardware-config > ./system/hardware-configuration.nix
 sleep 1

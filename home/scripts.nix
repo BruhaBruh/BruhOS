@@ -3,6 +3,7 @@
 {
   home.packages = with scripts; [
     openproject
+    wallpaper
     randomwallpaper
     powermenu
     journallog

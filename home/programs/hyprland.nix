@@ -1,5 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, vars, ... }:
 
+let
+  runRandomWallpaperService =
+    if vars.randomWallpaperService.enabled then [
+      "systemctl --user restart random-wallpaper.timer && systemctl --user restart random-wallpaper.service"
+    ] else [
+      "systemctl --user stop random-wallpaper.timer && systemctl --user stop random-wallpaper.service"
+    ];
+in
 {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -208,16 +216,12 @@
 
         "float,initialTitle:^(Картинка в картинке)$"
         "size 854 480,initialTitle:^(Картинка в картинке)$"
-        "move 100%-w-16 100%-w-16,initialTitle:^(Картинка в картинке)$"
+        "move 100%-w-18 100%-w-18,initialTitle:^(Картинка в картинке)$"
         "pin,initialTitle:^(Картинка в картинке)$"
         "keepaspectratio,initialTitle:^(Картинка в картинке)$"
       ];
 
-      exec-once = [
-        # Random Wallpaper Every 15 minutes
-        "systemctl --user restart random-wallpaper.service"
-        "systemctl --user restart random-wallpaper.timer"
-
+      exec-once = runRandomWallpaperService ++ [
         "waybar"
 
         "[workspace 1 silent] zen"

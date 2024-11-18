@@ -144,12 +144,31 @@ input "Enter git default branch" gitDefaultBranch "main"
 
 sed -i "s|defaultBranch = \".*\"|defaultBranch = \"$gitDefaultBranch\"|g" flake.nix
 
-question "Enable proxy?" answer
-if [[ "$answer" == "true" ]]; then
+echo
+
+question "Enable proxy?" enableProxy
+if [[ "$enableProxy" == "true" ]]; then
   sed -i "s|enableProxy = .*;|enableProxy = true;|g" flake.nix
 else
   sed -i "s|enableProxy = .*;|enableProxy = false;|g" flake.nix
 fi
+
+echo
+
+question "Enable random wallpaper service?" enableRandomWallpaperService
+if [[ "$enableRandomWallpaperService" == "true" ]]; then
+  sed -i "s|enabled = .*;|enabled = true;|g" flake.nix
+
+  echo
+
+  input "Enter interval for random wallpaper in minutes" randomWallpaperInterval "1"
+  
+  sed -i "s|interval = .*;|interval = $randomWallpaperInterval;|g" flake.nix
+else
+  sed -i "s|enabled = .*;|enabled = false;|g" flake.nix
+fi
+
+echo
 
 echo "$OK Complete reconfiguration with values:"
 echo "$GRAY  flake directory: $flakeDirectory"
@@ -161,4 +180,6 @@ echo "$GRAY  extra locale: $extraLocale"
 echo "$GRAY  git username: $gitUsername"
 echo "$GRAY  git email: $gitEmail"
 echo "$GRAY  git default branch: $gitDefaultBranch"
-echo "$GRAY  proxy: $answer"
+echo "$GRAY  proxy: $enableProxy"
+echo "$GRAY  random wallpaper service: $enableRandomWallpaperService"
+echo "$GRAY  random wallpaper interval: ${randomWallpaperInterval:-1}m"

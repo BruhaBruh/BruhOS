@@ -8,6 +8,7 @@ in
 {
   askpass = loadScript ./askpass.nix;
   openproject = loadScript ./openproject.nix;
+  wallpaper = loadScript ./wallpaper.nix;
   randomwallpaper = loadScript ./randomwallpaper.nix;
   powermenu = loadScript ./powermenu.nix;
   journallog = loadScript ./journallog.nix;

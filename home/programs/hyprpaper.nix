@@ -1,5 +1,8 @@
 { pkgs, vars, scripts, ... }:
 
+let
+  serviceInterval = toString vars.randomWallpaperService.interval;
+in
 {
   services.hyprpaper = {
     enable = true;
@@ -20,7 +23,7 @@
         Description = "Change wallpaper every 15 minutes";
       };
       Timer = {
-        OnCalendar = "*:0/15";
+        OnCalendar = "*:0/${serviceInterval}";
         Unit = "random-wallpaper.service";
       };
       Install = {
@@ -39,3 +42,4 @@
     };
   };
 }
+

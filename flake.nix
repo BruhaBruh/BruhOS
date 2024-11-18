@@ -45,11 +45,17 @@
           defaultBranch = "main";
         };
 
+        randomWallpaperService = {
+          enabled = false;
+          interval = 1; # in minutes
+        };
+
         enableProxy = false;
 
         configWallpapersDirectory = ./config/wallpapers;
+        configDefaultWallpaper = ./config/wallpapers/gradient-1.jpg;
         wallpapersDirectory = "/home/${vars.username}/.config/wallpapers";
-        defaultWallpaper = "${vars.wallpapersDirectory}/1.jpg";
+        defaultWallpaper = "${vars.wallpapersDirectory}/gradient-1.jpg";
       };
 
       scripts = import ./scripts {

@@ -29,7 +29,7 @@
 
         "custom/wallpaper" = {
           format = "";
-          on-click = "randomwallpaper";
+          on-click = "wallpaper";
           tooltip = false;
         };
 

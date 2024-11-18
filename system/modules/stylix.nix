@@ -1,10 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, vars, ... }:
 
 {
   stylix = {
     enable = true;
     autoEnable = true;
-    image = ../../config/wallpapers/1.jpg;
+    image = vars.configDefaultWallpaper;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
     cursor = {
       name = "catppuccin-macchiato-dark-cursors";
