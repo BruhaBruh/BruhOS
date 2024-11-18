@@ -177,13 +177,13 @@ echo
 
 input "Enter hostname" hostName "nixos"
 
-sed -i "s|hostName = \"nixos\"|hostName = \"$hostName\"|g" /mnt/etc/nixos/configuration.nix
+sed -i "s|hostName = \".*\"|hostName = \"$hostName\"|g" /mnt/etc/nixos/configuration.nix
 
 echo
 
 input "Enter username" username "bruhabruh"
 
-sed -i "s|username = \"bruhabruh\"|username = \"$username\"|g" /mnt/etc/nixos/configuration.nix
+sed -i "s|username = \".*\"|username = \"$username\"|g" /mnt/etc/nixos/configuration.nix
 
 echo
 

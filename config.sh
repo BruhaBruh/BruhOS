@@ -83,16 +83,6 @@ fi
 
 echo
 
-if [[ -x "$(command -v git)" ]]; then
-  echo "$OK Git is installed continuing with installation."
-else
-  echo "$ERROR Git is not installed. Please install Git and try again."
-  echo "$NOTE Example: nix-shell -p git"
-  exit
-fi
-
-echo
-
 echo "$ACTION Ensure in home directory"
 cd || exit
 
@@ -100,22 +90,6 @@ echo
 
 input "Enter flake directory" flakeDirectory "$HOME/.dotfiles"
 
-echo
-
-if [[ -d "$flakeDirectory" ]]; then
-  question "Dot files exists. Do you want to backup?" answer
-  if [[ "$answer" == "true" ]]; then
-    backupname=$(date "+%H-%M-%S-%d-%m-%Y")
-    echo "$NOTE Dot files exists. backing up to ${flakeDirectory}-${backupname}"
-    mv "$flakeDirectory" "$flakeDirectory-$backupname"
-    sleep 1
-  fi
-fi
-
-echo
-
-echo "$ACTION Cloning BruhOS Repository & entering"
-git clone https://github.com/BruhaBruh/BruhOS.git $flakeDirectory
 cd $flakeDirectory || exit
 
 sed -i "s|flakeDirectory = \".*\"|flakeDirectory = \"$flakeDirectory\"|g" flake.nix
@@ -170,38 +144,21 @@ input "Enter git default branch" gitDefaultBranch "main"
 
 sed -i "s|defaultBranch = \".*\"|defaultBranch = \"$gitDefaultBranch\"|g" flake.nix
 
-echo
-
-echo "$ACTION Generating The Hardware Configuration"
-sudo nixos-generate-config --show-hardware-config > ./system/hardware-configuration.nix
-sleep 1
-
-echo
-
-echo "$ACTION Add changes to git"
-
-if ! git config --global user.name >/dev/null 2>&1; then
-  git config --global user.name "installer"
+question "Enable proxy?" answer
+if [[ "$answer" == "true" ]]; then
+  sed -i "s|enableProxy = .*;|enableProxy = true;|g" flake.nix
+else
+  sed -i "s|enableProxy = .*;|enableProxy = false;|g" flake.nix
 fi
 
-if ! git config --global user.email >/dev/null 2>&1; then
-  git config --global user.email "installer@gmail.com"
-fi
-git add .
-
-echo
-
-echo "$ACTION Setting Required Nix Settings Then Going To Install"
-NIX_CONFIG="experimental-features = nix-command flakes"
-
-echo
-
-strict_question "Rebuild NixOS?" answer
-if [[ "$answer" == "false" ]]; then
-  echo "$NOTE To rebuild NixOS use: sudo nixos-rebuild switch --flake $flakeDirectory"
-  exit
-fi
-
-sudo nixos-rebuild switch --flake ./
-
-echo "$OK Complete install"
+echo "$OK Complete reconfiguration with values:"
+echo "$GRAY  flake directory: $flakeDirectory"
+echo "$GRAY  hostname: $hostName"
+echo "$GRAY  username: $username"
+echo "$GRAY  time zone: $timeZone"
+echo "$GRAY  default locale: $defaultLocale"
+echo "$GRAY  extra locale: $extraLocale"
+echo "$GRAY  git username: $gitUsername"
+echo "$GRAY  git email: $gitEmail"
+echo "$GRAY  git default branch: $gitDefaultBranch"
+echo "$GRAY  proxy: $answer"

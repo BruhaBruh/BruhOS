@@ -26,7 +26,7 @@
       vars = {
         flakeDirectory = "/home/bruhabruh/.dotfiles";
         hostName = "desktop";
-        username = "bruhabruh";
+        username = "bruhabruh"; # user
 
         timeZone = "Asia/Yekaterinburg";
 
@@ -34,13 +34,13 @@
           default = "en_US.UTF-8";
           extra = "ru_RU.UTF-8";
           supported = [
-            "en_US.UTF-8/UTF-8"
-            "ru_RU.UTF-8/UTF-8"
+            "en_US.UTF-8/UTF-8" # default
+            "ru_RU.UTF-8/UTF-8" # extra
           ];
         };
 
         git = {
-          username = "BruhaBruh";
+          username = "BruhaBruh"; # git
           email = "drugsho.jaker@gmail.com";
           defaultBranch = "main";
         };

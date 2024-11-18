@@ -1,4 +1,4 @@
-{ vars, ... }:
+{ vars, scripts, ... }:
 
 {
   programs.zsh = {
@@ -16,6 +16,7 @@
       RPROMPT="%F{7}%?%f - %F{7}%T%f"
     '';
     shellAliases = {
+      sudo = "${scripts.ssudo}/bin/ssudo";
       fullClean = '' 
         nix-collect-garbage --delete-old
 

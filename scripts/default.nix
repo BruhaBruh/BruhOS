@@ -6,8 +6,10 @@ with lib; let
   });
 in
 {
+  askpass = loadScript ./askpass.nix;
   openproject = loadScript ./openproject.nix;
   randomwallpaper = loadScript ./randomwallpaper.nix;
   powermenu = loadScript ./powermenu.nix;
   journallog = loadScript ./journallog.nix;
+  ssudo = loadScript ./ssudo.nix;
 }
