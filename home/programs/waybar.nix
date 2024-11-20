@@ -1,5 +1,45 @@
-{ ... }:
+{ pkgs, ... }:
 
+let
+  spotifydata = pkgs.writeShellScriptBin "spotifydata" ''
+    snore() {
+      local IFS
+      [[ -n "''${_snore_fd:-}" ]] || exec {_snore_fd}<> <(:)
+      read -r ''${1:+-t "$1"} -u $_snore_fd || :
+    }
+
+    DELAY=0.2
+
+    while snore $DELAY; do
+      if ! sp status > /dev/null 2>&1; then
+        printf '{"class": "offline"}\n'
+        continue
+      fi
+
+      status="playing"
+      if [ "$(sp status)" = "Paused" ]; then
+        status="paused"
+      fi
+
+      artist="$(sp metadata | grep artist | cut -d "|" -f 2)"
+      track="$(sp metadata | grep title | cut -d "|" -f 2)"
+
+      text="''${artist} - ''${track}"
+      if [[ "''${artist}" = "" ]]; then
+        text="''${track}"
+      fi
+      if [[ "''${artist}" = "" && "''${track}" = "" ]]; then
+        text=""
+      fi
+
+      if [[ "''${artist}" = "" && "''${track}" = "Advertisement" ]]; then
+        status="ad-''${status}"
+      fi
+
+      printf "{\"text\": \"''${text}\", \"artist\": \"''${artist}\", \"track\": \"''${track}\", \"class\": \"''${status}\", \"alt\": \"''${status}\"}\n"
+    done
+  '';
+in
 {
   programs.waybar = {
     enable = true;
@@ -19,11 +59,11 @@
 
         modules-left = [ "custom/apps" "custom/wallpaper" "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "custom/time" "custom/date" "custom/powermenu" ];
+        modules-right = [ "custom/spotify-prev" "custom/spotify" "custom/spotify-next" "custom/time" "custom/date" "custom/powermenu" ];
 
         "custom/apps" = {
           format = "";
-          on-click = "rofi -show drun -theme $HOME/.config/rofi/default.rasi";
+          on-click = "rofi -show drun -theme $HOME/.config/rofi/launcher.rasi";
           tooltip = false;
         };
 
@@ -45,6 +85,58 @@
             "Spotify.*" = "Spotify";
           };
           separate-outputs = true;
+        };
+
+        "custom/spotify-prev" = {
+          format = "{icon}";
+          format-icons = {
+            playing = "";
+            paused = "";
+            ad-playing = "";
+            ad-paused = "";
+          };
+          hide-empty-text = true;
+          escape = true;
+          return-type = "json";
+          restart-interval = 1;
+          on-click = "sp prev";
+          exec = "${spotifydata}/bin/spotifydata 2> /dev/null";
+          exec-on-event = false;
+        };
+
+        "custom/spotify" = {
+          format = "{} {icon}";
+          format-icons = {
+            playing = "";
+            paused = "";
+            ad-playing = "";
+            ad-paused = "";
+          };
+          hide-empty-text = true;
+          escape = true;
+          return-type = "json";
+          restart-interval = 1;
+          on-click = "sp play";
+          exec = "${spotifydata}/bin/spotifydata 2> /dev/null";
+          exec-on-event = false;
+        };
+
+
+        "custom/spotify-next" = {
+          format = "{icon}";
+          format-icons = {
+            playing = "";
+            paused = "";
+            ad-playing = "";
+            ad-paused = "";
+          };
+          hide-empty-text = true;
+          escape = true;
+          return-type = "json";
+          restart-interval = 1;
+          on-click = "sp next";
+          exec = "${spotifydata}/bin/spotifydata 2> /dev/null";
+          exec-on-event = false;
         };
 
         "custom/time" = {
@@ -121,6 +213,9 @@
       #custom-apps,
       #custom-wallpaper,
       #window,
+      #custom-spotify-prev,
+      #custom-spotify,
+      #custom-spotify-next,
       #custom-time,
       #custom-date,
       #custom-uptime,
@@ -237,6 +332,67 @@
 
       window#waybar.empty #window {
         padding: 0;
+      }
+
+      #custom-spotify-prev {
+        margin-right: 0px;
+        padding-right: 16px;
+      }
+
+      #custom-spotify {
+        padding-right: 14px;
+        transition: all 0.2s ease-in-out;
+      }
+
+      #custom-spotify-next {
+        margin-left: 0px;
+        padding-right: 16px;
+      }
+
+
+      #custom-spotify-prev,
+      #custom-spotify,
+      #custom-spotify-next {
+        background: @text;
+        color: @base;
+      }
+
+      #custom-spotify.playing {
+        color: @base;
+        background: linear-gradient(
+          70deg,
+          @mauve 0%,
+          @lavender 12%,
+          @yellow 19%,
+          @mauve 20%,
+          @mauve 24%,
+          @teal 36%,
+          @lavender 37%,
+          @sapphire 48%,
+          @text 52%,
+          @blue 52%,
+          @blue 59%,
+          @green 66%,
+          @lavender 67%,
+          @lavender 68%,
+          @subtext1 77%,
+          @green 78%,
+          @blue 82%,
+          @lavender 83%,
+          @blue 90%,
+          @blue 100%
+        );
+        background-size: 400% 400%;
+        animation: gradient_f 20s ease-in-out infinite;
+      }
+
+      #custom-spotify-prev.ad-playing,
+      #custom-spotify.ad-playing,
+      #custom-spotify-next.ad-playing,
+      #custom-spotify-prev.ad-paused,
+      #custom-spotify.ad-paused,
+      #custom-spotify-next.ad-paused {
+        opacity: 0.5;
       }
 
       #custom-time {

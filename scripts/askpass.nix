@@ -1,4 +1,4 @@
-{ pkgs, vars, ... }:
+{ pkgs, ... }:
 
 pkgs.writeShellScriptBin "askpass" ''
   set -e

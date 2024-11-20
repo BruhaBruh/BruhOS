@@ -11,9 +11,9 @@
       catppuccin.catppuccin-vsc-icons
       dbaeumer.vscode-eslint
       eamodio.gitlens
-      github.github-vscode-theme
       k--kato.intellij-idea-keybindings
       ms-ceintl.vscode-language-pack-ru
+      ms-azuretools.vscode-docker
     ];
     languageSnippets = {
       typescriptreact = {

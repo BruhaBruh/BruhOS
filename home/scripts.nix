@@ -8,6 +8,7 @@
     powermenu
     journallog
     askpass
+    sp
   ];
 
   home.sessionVariables = {

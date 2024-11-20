@@ -11,6 +11,7 @@
     bitwarden-desktop
     spotify
     pkgs-stable.obs-studio
+    libreoffice
 
     # VPN
     nekoray
@@ -37,6 +38,7 @@
     unzip
     nixpkgs-fmt
     gh
+    spotify-cli-linux
 
     # XDG
     xdg-utils
@@ -69,7 +71,7 @@
     qt6ct
     qt6.qtwayland
     qt6Packages.qtstyleplugin-kvantum
-    rofi
+    rofi-wayland
     slurp
     swaynotificationcenter
     yad
@@ -89,6 +91,7 @@
     duf
     eza
     bat
+    lsof
     ffmpeg
     glib
     gsettings-qt

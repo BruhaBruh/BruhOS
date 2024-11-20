@@ -195,6 +195,7 @@ in
         enable_swallow = true;
         render_ahead_of_time = false;
         disable_hyprland_logo = true;
+        middle_click_paste = false;
         font_family = "Inter";
       };
 
@@ -233,7 +234,7 @@ in
 
       bind = [
         "$mainMod, Q, exec, foot"
-        "$mainMod, SPACE, exec, rofi -show drun -theme $HOME/.config/rofi/default.rasi"
+        "$mainMod, SPACE, exec, rofi -show drun -theme $HOME/.config/rofi/launcher.rasi"
         "$mainMod, E, exec, thunar"
         "$mainMod, F, togglefloating"
         "$mainMod, C, centerwindow"
@@ -296,13 +297,16 @@ in
         ", XF86AudioLowerVolume, exec, pamixer -d 5 "
         ", XF86AudioMute, exec, pamixer -t"
         ", XF86AudioMicMute, exec, pamixer --default-source -m"
+        ", XF86AudioPlay, exec, sp play"
+        ", XF86AudioPrev, exec, sp prev"
+        ", XF86AudioNext, exec, sp next"
 
         # Color Picker
-        "$mainMod, R, exec, color=$(hyprpicker -a -f hex) && notify-send \"Color picker\" \"Picked color <span foreground=\\\"$color\\\">$color</span>\""
+        "$mainMod, R, exec, read color < <(hyprpicker -a -f hex) && notify-send \"Color picker\" \"Picked color <span foreground=\\\"$color\\\">$color</span>\""
 
         # Screenshot
         ''$mainMod, S, exec, grim - | wl-copy && notify-send "Screenshot" "Fullscreen screenshot saved to clipboard"''
-        ''$mainMod SHIFT, S, exec, grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Screenshot saved to clipboard"''
+        ''$mainMod SHIFT, S, exec, read area < <(slurp) && grim -g "''${area}" - | wl-copy && notify-send "Screenshot" "Screenshot saved to clipboard"''
 
         # Waybar
         "$mainMod, B, exec, pkill -SIGUSR1 waybar"
@@ -313,6 +317,7 @@ in
       bindm = [
         "$mainMod, mouse:272, movewindow"
         "$mainMod, mouse:273, resizewindow"
+        ", mouse:274, movewindow"
       ];
     };
   };

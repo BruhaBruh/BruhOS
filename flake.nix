@@ -52,10 +52,12 @@
 
         enableProxy = false;
 
+        defaultWallpaperName = "forest.jpg";
+
         configWallpapersDirectory = ./config/wallpapers;
-        configDefaultWallpaper = ./config/wallpapers/gradient-1.jpg;
+        configDefaultWallpaper = ./config/wallpapers/${vars.defaultWallpaperName};
         wallpapersDirectory = "/home/${vars.username}/.config/wallpapers";
-        defaultWallpaper = "${vars.wallpapersDirectory}/gradient-1.jpg";
+        defaultWallpaper = "${vars.wallpapersDirectory}/${vars.defaultWallpaperName}";
       };
 
       scripts = import ./scripts {

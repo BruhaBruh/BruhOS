@@ -1,9 +1,11 @@
 @import "shared.rasi"
 
 configuration {
-  modi: "drun,run";
+  modi: "drun,run,calc,emoji";
   display-drun: "";
   display-run: "";
+  display-calc: "";
+  display-emoji: "";
 	scroll-method: 1;
 }
 
@@ -87,7 +89,7 @@ listview {
   scrollbar: false;
   layout: vertical;
   reverse: false;
-  fixed-height: true;
+  fixed-height: false;
   fixed-columns: true;
 
   spacing: 4px;

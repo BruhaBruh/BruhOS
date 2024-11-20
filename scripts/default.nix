@@ -13,4 +13,5 @@ in
   powermenu = loadScript ./powermenu.nix;
   journallog = loadScript ./journallog.nix;
   ssudo = loadScript ./ssudo.nix;
+  sp = loadScript ./sp.nix;
 }
