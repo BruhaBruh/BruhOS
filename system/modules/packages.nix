@@ -110,7 +110,7 @@
     grim
     gtk-engine-murrine
     inxi
-    home-manager
+    inter
   ];
 
   programs = {

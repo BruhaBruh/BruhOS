@@ -1,4 +1,4 @@
-{ pkgs, vars, ... }:
+{ pkgs, vars, inputs, ... }:
 
 let
   cursor =
@@ -21,13 +21,13 @@ in
     cursor = cursor;
     fonts = {
       serif = {
-        package = pkgs.inter;
-        name = "Inter";
+        package = inputs.apple-fonts.packages.${pkgs.system}.sf-pro;
+        name = "SFProDisplay";
       };
 
       sansSerif = {
-        package = pkgs.inter;
-        name = "Inter";
+        package = inputs.apple-fonts.packages.${pkgs.system}.sf-pro;
+        name = "SFProDisplay";
       };
 
       monospace = {

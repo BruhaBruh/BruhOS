@@ -12,6 +12,7 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
     stylix.url = "github:danth/stylix";
+    apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
     zen-browser.url = "github:MarceColl/zen-browser-flake";
   };
 
