@@ -69,6 +69,17 @@ strict_question() {
   fi
 }
 
+print_wallpapers() {
+  echo "$NOTE Available wallpapers in dotfiles"
+  find ./config/wallpapers \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) \
+    | sed 's|./config/wallpapers/||' \
+    | sort \
+    | paste -d $'\t' - - \
+    | column -t \
+    | sed 's/^/\t/'
+  echo
+}
+
 echo "$NOTE BruhOS"
 echo "$NOTE Default values is ${GRAY}GRAY"
 
@@ -92,94 +103,140 @@ input "Enter flake directory" flakeDirectory "$HOME/.dotfiles"
 
 cd $flakeDirectory || exit
 
-sed -i "s|flakeDirectory = \".*\"|flakeDirectory = \"$flakeDirectory\"|g" flake.nix
+sed -i "/# flakeDirectory/{n;s|= .*;|= \"$flakeDirectory\";|}" variables.nix
+
+echo
+
+echo "$NOTE Main configuration"
 
 echo
 
 input "Enter hostname" hostName "nixos"
 
-sed -i "s|hostName = \".*\"|hostName = \"$hostName\"|g" flake.nix
+sed -i "/# hostName/{n;s|= .*;|= \"$hostName\";|}" variables.nix
 
 echo
 
 input "Enter username" username "bruhabruh"
 
-sed -i "s|username = \".*\"; # user|username = \"$username\"; # user|g" flake.nix
+sed -i "/# username/{n;s|= .*;|= \"$username\";|}" variables.nix
+
+echo
+
+echo "$NOTE i18n configuration"
 
 echo
 
 input "Enter time zone" timeZone "Asia/Yekaterinburg"
 
-sed -i "s|timeZone = \".*\"|timeZone = \"$timeZone\"|g" flake.nix
+sed -i "/# timeZone/{n;s|= .*;|= \"$timeZone\";|}" variables.nix
 
 echo
 
 input "Enter default locale" defaultLocale "en_US.UTF-8"
 
-sed -i "s|default = \".*\"|default = \"$defaultLocale\"|g" flake.nix
-sed -i "s|\".*\" # default|\"$defaultLocale/UTF-8\" # default|g" flake.nix
+sed -i "/# locale.default/{n;s|= .*;|= \"$defaultLocale\";|}" variables.nix
+
+sed -i "/# locale.supported\[0\]/{n;s|\".*\"|\"$defaultLocale/UTF-8\"|}" variables.nix
 
 echo
 
 input "Enter extra locale" extraLocale "ru_RU.UTF-8"
 
-sed -i "s|extra = \".*\"|extra = \"$extraLocale\"|g" flake.nix
-sed -i "s|\".*\" # extra|\"$extraLocale/UTF-8\" # extra|g" flake.nix
+sed -i "/# locale.extra/{n;s|= .*;|= \"$extraLocale\";|}" variables.nix
+
+sed -i "/# locale.supported\[1\]/{n;s|\".*\"|\"$extraLocale/UTF-8\"|}" variables.nix
+
+echo
+
+echo "$NOTE Git configuration"
 
 echo
 
 input "Enter git username" gitUsername "BruhaBruh"
 
-sed -i "s|username = \".*\"; # git|username = \"$gitUsername\"; # git|g" flake.nix
+sed -i "/# git.username/{n;s|= .*;|= \"$gitUsername\";|}" variables.nix
 
 echo
 
 input "Enter git email" gitEmail "drugsho.jaker@gmail.com"
 
-sed -i "s|email = \".*\"|email = \"$gitEmail\"|g" flake.nix
+sed -i "/# git.email/{n;s|= .*;|= \"$gitEmail\";|}" variables.nix
 
 echo
 
 input "Enter git default branch" gitDefaultBranch "main"
 
-sed -i "s|defaultBranch = \".*\"|defaultBranch = \"$gitDefaultBranch\"|g" flake.nix
+sed -i "/# git.defaultBranch/{n;s|= .*;|= \"$gitDefaultBranch\";|}" variables.nix
 
 echo
 
-question "Enable proxy?" enableProxy
-if [[ "$enableProxy" == "true" ]]; then
-  sed -i "s|enableProxy = .*;|enableProxy = true;|g" flake.nix
-else
-  sed -i "s|enableProxy = .*;|enableProxy = false;|g" flake.nix
-fi
+echo "$NOTE Theme configuration"
+
+echo
+
+question "Use Apple cursors instead of Catppuccin?" enableAppleCursors
+
+sed -i "/# apple.cursors.enabled/{n;s|= .*;|= $enableAppleCursors;|}" variables.nix
+
+echo
+
+question "Use Apple icons instead of Papirus?" enableAppleIcons
+
+sed -i "/# apple.icons.enabled/{n;s|= .*;|= $enableAppleIcons;|}" variables.nix
+
+echo
+
+print_wallpapers
+
+input "Enter default wallpaper" defaultWallpaper "forest.jpg"
+
+sed -i "/# wallpaper.default/{n;s|= .*;|= \"$defaultWallpaper\";|}" variables.nix
 
 echo
 
 question "Enable random wallpaper service?" enableRandomWallpaperService
-if [[ "$enableRandomWallpaperService" == "true" ]]; then
-  sed -i "s|enabled = .*;|enabled = true;|g" flake.nix
 
+sed -i "/# wallpaper.service.enabled/{n;s|= .*;|= $enableRandomWallpaperService;|}" variables.nix
+
+if [[ "$enableRandomWallpaperService" == "true" ]]; then
   echo
 
-  input "Enter interval for random wallpaper in minutes" randomWallpaperInterval "1"
-  
-  sed -i "s|interval = .*;|interval = $randomWallpaperInterval;|g" flake.nix
-else
-  sed -i "s|enabled = .*;|enabled = false;|g" flake.nix
+  input "Enter random wallpaper interval in minutes" randomWallpaperInterval "1"
+
+  sed -i "/# wallpaper.service.interval/{n;s|= .*;|= $randomWallpaperInterval;|}" variables.nix
 fi
 
 echo
 
+echo "$NOTE Other configuration"
+
+echo
+
+question "Enable proxy?" enableProxy
+
+sed -i "/# proxy.enabled/{n;s|= .*;|= $enableProxy;|}" variables.nix
+
+echo
+
 echo "$OK Complete reconfiguration with values:"
-echo "$GRAY  flake directory: $flakeDirectory"
-echo "$GRAY  hostname: $hostName"
-echo "$GRAY  username: $username"
-echo "$GRAY  time zone: $timeZone"
-echo "$GRAY  default locale: $defaultLocale"
-echo "$GRAY  extra locale: $extraLocale"
-echo "$GRAY  git username: $gitUsername"
-echo "$GRAY  git email: $gitEmail"
-echo "$GRAY  git default branch: $gitDefaultBranch"
-echo "$GRAY  proxy: $enableProxy"
-echo "$GRAY  random wallpaper service: $enableRandomWallpaperService"
-echo "$GRAY  random wallpaper interval: ${randomWallpaperInterval:-1}m"
+echo -e "$GRAY\tflake directory: $YELLOW$flakeDirectory"
+echo -e "$GRAY$RESET\tMain"
+echo -e "$GRAY\t\thostname: $YELLOW$hostName"
+echo -e "$GRAY\t\tusername: $YELLOW$username"
+echo -e "$GRAY$RESET\ti18n"
+echo -e "$GRAY\t\ttimeZone: $YELLOW$timeZone"
+echo -e "$GRAY\t\tdefault locale: $YELLOW$defaultLocale"
+echo -e "$GRAY\t\textra locale: $YELLOW$extraLocale"
+echo -e "$GRAY$RESET\tGit"
+echo -e "$GRAY\t\tusername: $YELLOW$gitUsername"
+echo -e "$GRAY\t\temail: $YELLOW$gitEmail"
+echo -e "$GRAY\t\tdefault branch: $YELLOW$gitDefaultBranch"
+echo -e "$GRAY$RESET\tTheme"
+echo -e "$GRAY\t\tcursors: $YELLOW$([[ "$enableAppleCursors" == "true" ]] && echo "Apple" || echo "Catppuccin")"
+echo -e "$GRAY\t\ticons: $YELLOW$([[ "$enableAppleCursors" == "true" ]] && echo "Apple" || echo "Papirus")"
+echo -e "$GRAY\t\tdefault wallpaper: $YELLOW$defaultWallpaper"
+echo -e "$GRAY\t\trandom wallpaper service is enabled: $YELLOW$enableRandomWallpaperService"
+echo -e "$GRAY\t\trandom wallpaper interval: $YELLOW${randomWallpaperInterval:-1}m"
+echo -e "$GRAY$RESET\tOther"
+echo -e "$GRAY\t\tproxy is enabled: $YELLOW$enableProxy"

@@ -1,5 +1,15 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, vars, ... }:
 
+let
+  iconTheme =
+    if vars.apple.cursors.enabled then {
+      name = "WhiteSur-dark";
+      package = pkgs.whitesur-icon-theme;
+    } else {
+      name = "Papirus";
+      package = pkgs.papirus-icon-theme;
+    };
+in
 {
   stylix = {
     enable = true;
@@ -14,9 +24,6 @@
   gtk = {
     enable = true;
 
-    iconTheme = {
-      name = "Papirus";
-      package = pkgs.papirus-icon-theme;
-    };
+    iconTheme = iconTheme;
   };
 }

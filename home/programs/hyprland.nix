@@ -2,7 +2,7 @@
 
 let
   runRandomWallpaperService =
-    if vars.randomWallpaperService.enabled then [
+    if vars.wallpaper.service.enabled then [
       "systemctl --user restart random-wallpaper.timer && systemctl --user restart random-wallpaper.service"
     ] else [
       "systemctl --user stop random-wallpaper.timer && systemctl --user stop random-wallpaper.service"

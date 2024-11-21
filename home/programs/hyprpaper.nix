@@ -1,19 +1,20 @@
 { pkgs, vars, scripts, ... }:
 
 let
-  serviceInterval = toString vars.randomWallpaperService.interval;
+  serviceInterval = toString vars.wallpaper.service.interval;
+  defaultWallpaper = "${vars.wallpaper.directory.destinationFull}/${vars.wallpaper.default}";
 in
 {
   services.hyprpaper = {
     enable = true;
     settings = {
-      preload = "${vars.defaultWallpaper}";
-      wallpaper = ", ${vars.defaultWallpaper}";
+      preload = "${defaultWallpaper}";
+      wallpaper = ", ${defaultWallpaper}";
     };
   };
 
-  home.file.".config/wallpapers" = {
-    source = vars.configWallpapersDirectory;
+  home.file."${vars.wallpaper.directory.destination}" = {
+    source = vars.wallpaper.directory.source;
     recursive = true;
   };
 

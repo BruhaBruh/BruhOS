@@ -23,42 +23,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
       pkgs-stable = nixpkgs-stable.legacyPackages.${system};
 
-      vars = {
-        flakeDirectory = "/home/bruhabruh/.dotfiles";
-        hostName = "desktop";
-        username = "bruhabruh"; # user
-
-        timeZone = "Asia/Yekaterinburg";
-
-        locale = {
-          default = "en_US.UTF-8";
-          extra = "ru_RU.UTF-8";
-          supported = [
-            "en_US.UTF-8/UTF-8" # default
-            "ru_RU.UTF-8/UTF-8" # extra
-          ];
-        };
-
-        git = {
-          username = "BruhaBruh"; # git
-          email = "drugsho.jaker@gmail.com";
-          defaultBranch = "main";
-        };
-
-        randomWallpaperService = {
-          enabled = false;
-          interval = 1; # in minutes
-        };
-
-        enableProxy = false;
-
-        defaultWallpaperName = "forest.jpg";
-
-        configWallpapersDirectory = ./config/wallpapers;
-        configDefaultWallpaper = ./config/wallpapers/${vars.defaultWallpaperName};
-        wallpapersDirectory = "/home/${vars.username}/.config/wallpapers";
-        defaultWallpaper = "${vars.wallpapersDirectory}/${vars.defaultWallpaperName}";
-      };
+      vars = import ./variables.nix;
 
       scripts = import ./scripts {
         inherit lib system pkgs pkgs-stable vars inputs;

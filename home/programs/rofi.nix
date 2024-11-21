@@ -14,7 +14,6 @@
       rofi-emoji
     ];
     extraConfig = {
-      icon-theme = "Papirus";
       show-icons = true;
 
       terminal = "foot";

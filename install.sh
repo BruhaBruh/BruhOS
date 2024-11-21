@@ -118,72 +118,119 @@ echo "$ACTION Cloning BruhOS Repository & entering"
 git clone https://github.com/BruhaBruh/BruhOS.git $flakeDirectory
 cd $flakeDirectory || exit
 
-sed -i "s|flakeDirectory = \".*\"|flakeDirectory = \"$flakeDirectory\"|g" flake.nix
+sed -i "/# flakeDirectory/{n;s|= .*;|= \"$flakeDirectory\";|}" variables.nix
+
+echo
+
+echo "$NOTE Main configuration"
 
 echo
 
 input "Enter hostname" hostName "nixos"
 
-sed -i "s|hostName = \".*\"|hostName = \"$hostName\"|g" flake.nix
+sed -i "/# hostName/{n;s|= .*;|= \"$hostName\";|}" variables.nix
 
 echo
 
 input "Enter username" username "bruhabruh"
 
-sed -i "s|username = \".*\"; # user|username = \"$username\"; # user|g" flake.nix
+sed -i "/# username/{n;s|= .*;|= \"$username\";|}" variables.nix
+
+echo
+
+echo "$NOTE i18n configuration"
 
 echo
 
 input "Enter time zone" timeZone "Asia/Yekaterinburg"
 
-sed -i "s|timeZone = \".*\"|timeZone = \"$timeZone\"|g" flake.nix
+sed -i "/# timeZone/{n;s|= .*;|= \"$timeZone\";|}" variables.nix
 
 echo
 
 input "Enter default locale" defaultLocale "en_US.UTF-8"
 
-sed -i "s|default = \".*\"|default = \"$defaultLocale\"|g" flake.nix
-sed -i "s|\".*\" # default|\"$defaultLocale/UTF-8\" # default|g" flake.nix
+sed -i "/# locale.default/{n;s|= .*;|= \"$defaultLocale\";|}" variables.nix
+
+sed -i "/# locale.supported\[0\]/{n;s|\".*\"|\"$defaultLocale/UTF-8\"|}" variables.nix
 
 echo
 
 input "Enter extra locale" extraLocale "ru_RU.UTF-8"
 
-sed -i "s|extra = \".*\"|extra = \"$extraLocale\"|g" flake.nix
-sed -i "s|\".*\" # extra|\"$extraLocale/UTF-8\" # extra|g" flake.nix
+sed -i "/# locale.extra/{n;s|= .*;|= \"$extraLocale\";|}" variables.nix
+
+sed -i "/# locale.supported\[1\]/{n;s|\".*\"|\"$extraLocale/UTF-8\"|}" variables.nix
+
+echo
+
+echo "$NOTE Git configuration"
 
 echo
 
 input "Enter git username" gitUsername "BruhaBruh"
 
-sed -i "s|username = \".*\"; # git|username = \"$gitUsername\"; # git|g" flake.nix
+sed -i "/# git.username/{n;s|= .*;|= \"$gitUsername\";|}" variables.nix
 
 echo
 
 input "Enter git email" gitEmail "drugsho.jaker@gmail.com"
 
-sed -i "s|email = \".*\"|email = \"$gitEmail\"|g" flake.nix
+sed -i "/# git.email/{n;s|= .*;|= \"$gitEmail\";|}" variables.nix
 
 echo
 
 input "Enter git default branch" gitDefaultBranch "main"
 
-sed -i "s|defaultBranch = \".*\"|defaultBranch = \"$gitDefaultBranch\"|g" flake.nix
+sed -i "/# git.defaultBranch/{n;s|= .*;|= \"$gitDefaultBranch\";|}" variables.nix
+
+echo
+
+echo "$NOTE Theme configuration"
+
+echo
+
+question "Use Apple cursors instead of Catppuccin?" enableAppleCursors
+
+sed -i "/# apple.cursors.enabled/{n;s|= .*;|= $enableAppleCursors;|}" variables.nix
+
+echo
+
+question "Use Apple icons instead of Papirus?" enableAppleIcons
+
+sed -i "/# apple.icons.enabled/{n;s|= .*;|= $enableAppleIcons;|}" variables.nix
+
+echo
+
+print_wallpapers
+
+input "Enter default wallpaper" defaultWallpaper "forest.jpg"
+
+sed -i "/# wallpaper.default/{n;s|= .*;|= \"$defaultWallpaper\";|}" variables.nix
 
 echo
 
 question "Enable random wallpaper service?" enableRandomWallpaperService
-if [[ "$enableRandomWallpaperService" == "true" ]]; then
-  sed -i "s|enabled = .*;|enabled = true;|g" flake.nix
 
+sed -i "/# wallpaper.service.enabled/{n;s|= .*;|= $enableRandomWallpaperService;|}" variables.nix
+
+if [[ "$enableRandomWallpaperService" == "true" ]]; then
   echo
 
-  input "Enter interval for random wallpaper in minutes" randomWallpaperInterval "1"
-  
-  sed -i "s|interval = .*;|interval = $randomWallpaperInterval;|g" flake.nix
-else
-  sed -i "s|enabled = .*;|enabled = false;|g" flake.nix
+  input "Enter random wallpaper interval in minutes" randomWallpaperInterval "1"
+
+  sed -i "/# wallpaper.service.interval/{n;s|= .*;|= $randomWallpaperInterval;|}" variables.nix
 fi
+
+echo
+
+echo "$NOTE Other configuration"
+
+echo
+
+question "Enable proxy?" enableProxy
+
+sed -i "/# proxy.enabled/{n;s|= .*;|= $enableProxy;|}" variables.nix
 
 echo
 
