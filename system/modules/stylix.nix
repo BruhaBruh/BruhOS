@@ -36,8 +36,10 @@ in
       };
 
       emoji = {
-        package = pkgs.twemoji-color-font;
-        name = "Twitter Color Emoji";
+        package = inputs.apple-emoji.packages.${pkgs.system}.apple-emoji-nix;
+        name = "Apple Color Emoji";
+        # package = pkgs.twemoji-color-font;
+        # name = "Twitter Color Emoji";
       };
     };
   };
