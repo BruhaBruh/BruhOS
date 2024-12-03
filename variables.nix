@@ -65,6 +65,6 @@ rec {
 
   proxy = {
     # proxy.enabled
-    enabled = false;
+    enabled = true;
   };
 }

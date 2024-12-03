@@ -32,16 +32,17 @@
       pkgs-stable = nixpkgs-stable.legacyPackages.${system};
 
       vars = import ./variables.nix;
+      aliases = import ./aliases.nix;
 
       scripts = import ./scripts {
-        inherit lib system pkgs pkgs-stable vars inputs;
+        inherit lib system pkgs pkgs-stable vars aliases inputs;
       };
     in
     {
       nixosConfigurations.${ vars.hostName} = lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit pkgs-stable vars inputs system scripts;
+          inherit pkgs-stable vars aliases inputs system scripts;
         };
         modules = [
           stylix.nixosModules.stylix
@@ -49,7 +50,7 @@
           home-manager.nixosModules.home-manager
           {
             home-manager.extraSpecialArgs = {
-              inherit pkgs-stable vars inputs system scripts;
+              inherit pkgs-stable vars aliases inputs system scripts;
             };
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

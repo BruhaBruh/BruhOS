@@ -1,6 +1,10 @@
 { pkgs, vars, ... }:
 
 let
+  waybar = {
+    kill = "pkill -SIGUSR1 waybar";
+    restart = "pkill -SIGUSR2 waybar && systemctl --user stop waybar.service";
+  };
   runRandomWallpaperService =
     if vars.wallpaper.service.enabled then [
       "systemctl --user restart random-wallpaper.timer && systemctl --user restart random-wallpaper.service"
@@ -195,7 +199,6 @@ in
         enable_swallow = true;
         render_ahead_of_time = false;
         disable_hyprland_logo = true;
-        middle_click_paste = false;
         font_family = "Inter";
       };
 
@@ -223,7 +226,7 @@ in
       ];
 
       exec-once = runRandomWallpaperService ++ [
-        "waybar"
+        "sleep 2 && ${waybar.restart} && waybar"
 
         "[workspace 1 silent] zen"
         "[workspace 2 silent] code"
@@ -309,15 +312,14 @@ in
         ''$mainMod SHIFT, S, exec, read area < <(slurp) && grim -g "''${area}" - | wl-copy && notify-send "Screenshot" "Screenshot saved to clipboard"''
 
         # Waybar
-        "$mainMod, B, exec, pkill -SIGUSR1 waybar"
-        "$mainMod, W, exec, pkill -SIGUSR2 waybar && systemctl --user stop waybar.service"
+        "$mainMod, B, exec, ${waybar.kill}"
+        "$mainMod, W, exec, ${waybar.restart}"
       ];
 
       # Move/resize windows with mainMod + LMB/RMB and dragging
       bindm = [
         "$mainMod, mouse:272, movewindow"
         "$mainMod, mouse:273, resizewindow"
-        ", mouse:274, movewindow"
       ];
     };
   };

@@ -1,4 +1,4 @@
-{ vars, scripts, ... }:
+{ vars, aliases, scripts, ... }:
 
 {
   programs.zsh = {
@@ -25,9 +25,8 @@
         sudo /run/current-system/bin/switch-to-configuration boot
       '';
       rebuild = "sudo nixos-rebuild switch --flake ${vars.flakeDirectory}";
-      dcup = "docker-compose up --build";
       cat = "bat";
       ls = "eza --icons=always";
-    };
+    } // aliases;
   };
 }

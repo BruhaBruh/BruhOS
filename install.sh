@@ -120,6 +120,13 @@ cd $flakeDirectory || exit
 
 sed -i "/# flakeDirectory/{n;s|= .*;|= \"$flakeDirectory\";|}" variables.nix
 
+if [[ ! -e "aliases.nix" ]]; then
+  echo
+  echo "$ACTION Create aliases.nix w/ blank aliases"
+  echo "{ }" > aliases.nix
+fi
+
+
 echo
 
 echo "$NOTE Main configuration"

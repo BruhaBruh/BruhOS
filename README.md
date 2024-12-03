@@ -66,6 +66,39 @@ sh <(curl -L https://github.com/BruhBruh/BruhOS/raw/main/install.sh)
 
 ### 📚 Documentation
 
+#### Variables
+
+You can edit it w/ `config.sh` script or in file `variables.nix`
+
+- `flakeDirectory` - Path to flake directory
+- `hostName` - hostname of NixOS
+- `username` - username for home manager
+- `timeZone` - time zone LOL
+- `locale.default` - Default locale for OS
+- `locale.extra` - Additional locale for OS
+- `locale.supported` - Array of default and additional locales
+- `git.username` - Git username
+- `git.email` - Git email
+- `git.defaultBranch` - Git default branch in new git repository
+- `apple.cursors.enabled` - Enable Apple cursors instead of Catppuccin
+- `apple.icons.enabled` - Enable Apple icons instead of Papirus
+- `wallpaper.default` - Default wallpaper path starting at ./config/wallpapers directory
+- `wallpaper.service.enabled` - Enable random wallpaper service
+- `wallpaper.service.interval` - Interval in minutes to set random wallpaper if service is enabled
+- `proxy.enabled` - Enable proxy for all requests exclude localhost, default from nekoray `http://127.0.0.1:2081`
+
+#### Aliases
+
+You can add this editing `aliases.nix` file
+
+Example:
+
+```nix
+{
+  sshhomeserver = "ssh bruhabruh@192.168.0.105";
+}
+```
+
 #### Key bindings
 
 `SUPER` - is Win key by default

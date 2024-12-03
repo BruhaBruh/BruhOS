@@ -1,8 +1,8 @@
-{ lib, system, pkgs, pkgs-stable, vars, ... }@inputs:
+{ lib, system, pkgs, pkgs-stable, vars, aliases, ... }@inputs:
 
 with lib; let
   loadScript = script: (import script {
-    inherit lib system pkgs pkgs-stable vars inputs;
+    inherit lib system pkgs pkgs-stable vars aliases inputs;
   });
 in
 {

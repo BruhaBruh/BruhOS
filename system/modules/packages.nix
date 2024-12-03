@@ -153,9 +153,13 @@
       enable = true;
       vt = 3;
       settings = {
+        initial_session = {
+          command = "${pkgs.hyprland}/bin/Hyprland";
+          user = "${vars.username}";
+        };
         default_session = {
           user = "${vars.username}";
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --asterisks --time --cmd Hyprland";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --remember-user-session --asterisks --time --cmd ${pkgs.hyprland}/bin/Hyprland";
         };
       };
     };
