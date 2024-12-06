@@ -14,4 +14,5 @@ in
   journallog = loadScript ./journallog.nix;
   ssudo = loadScript ./ssudo.nix;
   sp = loadScript ./sp.nix;
+  waybarstop = loadScript ./waybarstop.nix;
 }

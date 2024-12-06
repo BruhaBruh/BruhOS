@@ -9,6 +9,7 @@
     journallog
     askpass
     sp
+    waybarstop
   ];
 
   home.sessionVariables = {
