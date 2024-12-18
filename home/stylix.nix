@@ -21,6 +21,7 @@ in
       hyprpaper.enable = false;
       rofi.enable = false;
       waybar.enable = false;
+      swaync.enable = false;
     };
   };
 
