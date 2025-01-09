@@ -62,9 +62,4 @@ rec {
       interval = 1;
     };
   };
-
-  proxy = {
-    # proxy.enabled
-    enabled = true;
-  };
 }

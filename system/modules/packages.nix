@@ -6,12 +6,15 @@
     chromium
     inputs.zen-browser.packages.${system}.default
     telegram-desktop
-    vscode
     vesktop
     bitwarden-desktop
     spotify
     pkgs-stable.obs-studio
     libreoffice
+
+    # Minecraft
+    prismlauncher
+    glfw-wayland-minecraft
 
     # VPN
     nekoray
@@ -149,6 +152,8 @@
   };
 
   services = {
+    resolved.enable = true;
+
     greetd = {
       enable = true;
       vt = 3;

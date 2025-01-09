@@ -10,6 +10,8 @@
     askpass
     sp
     waybarstop
+    audiocycle
+    audiovolume
   ];
 
   home.sessionVariables = {

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   programs.vscode = {
@@ -52,7 +52,7 @@
       "editor.tabSize" = 2;
       "editor.indentSize" = "tabSize";
       "editor.lineHeight" = 1.5;
-      "editor.fontSize" = 16;
+      "editor.fontSize" = lib.mkForce 16;
       "editor.fontLigatures" = false;
       "editor.fontVariations" = true;
       "editor.fontWeight" = "bold";

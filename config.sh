@@ -213,12 +213,6 @@ echo "$NOTE Other configuration"
 
 echo
 
-question "Enable proxy?" enableProxy
-
-sed -i "/# proxy.enabled/{n;s|= .*;|= $enableProxy;|}" variables.nix
-
-echo
-
 echo "$OK Complete reconfiguration with values:"
 echo -e "$GRAY\tflake directory: $YELLOW$flakeDirectory"
 echo -e "$GRAY$RESET\tMain"
@@ -239,4 +233,3 @@ echo -e "$GRAY\t\tdefault wallpaper: $YELLOW$defaultWallpaper"
 echo -e "$GRAY\t\trandom wallpaper service is enabled: $YELLOW$enableRandomWallpaperService"
 echo -e "$GRAY\t\trandom wallpaper interval: $YELLOW${randomWallpaperInterval:-1}m"
 echo -e "$GRAY$RESET\tOther"
-echo -e "$GRAY\t\tproxy is enabled: $YELLOW$enableProxy"

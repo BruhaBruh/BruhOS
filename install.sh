@@ -235,12 +235,6 @@ echo "$NOTE Other configuration"
 
 echo
 
-question "Enable proxy?" enableProxy
-
-sed -i "/# proxy.enabled/{n;s|= .*;|= $enableProxy;|}" variables.nix
-
-echo
-
 echo "$ACTION Generating The Hardware Configuration"
 sudo nixos-generate-config --show-hardware-config > ./system/hardware-configuration.nix
 sleep 1

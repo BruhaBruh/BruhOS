@@ -1,13 +1,5 @@
 { pkgs, vars, scripts, ... }:
 
-let
-  runRandomWallpaperService =
-    if vars.wallpaper.service.enabled then [
-      "systemctl --user restart random-wallpaper.timer && systemctl --user restart random-wallpaper.service"
-    ] else [
-      "systemctl --user stop random-wallpaper.timer && systemctl --user stop random-wallpaper.service"
-    ];
-in
 {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -206,11 +198,21 @@ in
       ];
 
       windowrulev2 = [
-        "workspace 1,initialTitle:^(Zen Browser)$"
-        "workspace 2,initialTitle:^(Visual Studio Code)$"
-        "workspace 3,initialTitle:^(Telegram)$"
-        "workspace 9,initialTitle:^(Spotify)$"
-        "workspace 10,initialClass:^(nekoray)$"
+        "workspace 1 silent,initialTitle:^(.*Zen Browser.*)$"
+        "workspace 2 silent,initialTitle:^(.*Visual Studio Code.*)$"
+        "workspace 3 silent,initialTitle:^(.*Telegram.*)$"
+        "workspace 9 silent,initialTitle:^(.*Spotify.*)$"
+        "workspace 10 silent,initialClass:^(.*nekoray.*)$"
+
+        "workspace 2 silent,class:^(.*IntelliJ.*)$"
+        "float,initialTitle:^(Welcome to IntelliJ.+)$"
+        "center,initialTitle:^(Welcome to IntelliJ.+)$"
+
+        "workspace 4 silent,initialTitle:^(.*Prism Launcher.*)$"
+        "workspace 4,initialTitle:^(Minecraft.+)$"
+        "float,initialTitle:^(Minecraft.+)$"
+        "keepaspectratio,initialTitle:^(Minecraft.+)$"
+        "center,initialTitle:^(Minecraft.+)$"
 
         "pin,initialClass:^(Rofi)$"
         "stayfocused,initialClass:^(Rofi)$"
@@ -223,7 +225,7 @@ in
         "keepaspectratio,initialTitle:^(Картинка в картинке)$"
       ];
 
-      exec-once = runRandomWallpaperService ++ [
+      exec-once = [
         "waybar"
         "${scripts.waybarstop}/bin/waybarstop"
 

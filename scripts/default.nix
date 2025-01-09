@@ -15,4 +15,6 @@ in
   ssudo = loadScript ./ssudo.nix;
   sp = loadScript ./sp.nix;
   waybarstop = loadScript ./waybarstop.nix;
+  audiocycle = loadScript ./audiocycle.nix;
+  audiovolume = loadScript ./audiovolume.nix;
 }

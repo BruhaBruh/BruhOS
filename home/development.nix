@@ -7,6 +7,9 @@
     nodePackages_latest.pnpm
     rustup
 
+    vscode
+    jetbrains.idea-ultimate
+
     prisma
   ];
 

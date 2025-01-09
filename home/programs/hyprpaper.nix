@@ -2,6 +2,13 @@
 
 let
   serviceInterval = toString vars.wallpaper.service.interval;
+
+  runRandomWallpaper =
+    if vars.wallpaper.service.enabled then [
+      "${scripts.randomwallpaper}/bin/randomwallpaper"
+    ] else [
+      "exit 0"
+    ];
   defaultWallpaper = "${vars.wallpaper.directory.destinationFull}/${vars.wallpaper.default}";
 in
 {
@@ -38,7 +45,7 @@ in
       };
       Service = {
         Type = "oneshot";
-        ExecStart = "${scripts.randomwallpaper}/bin/randomwallpaper";
+        ExecStart = runRandomWallpaper;
       };
     };
   };

@@ -9,6 +9,7 @@
     ./foot.nix
     ./rofi.nix
     ./vscode.nix
+    ./zededitor.nix
     ./bat.nix
     ./swaync.nix
     ./btop.nix

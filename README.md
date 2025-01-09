@@ -85,7 +85,6 @@ You can edit it w/ `config.sh` script or in file `variables.nix`
 - `wallpaper.default` - Default wallpaper path starting at ./config/wallpapers directory
 - `wallpaper.service.enabled` - Enable random wallpaper service
 - `wallpaper.service.interval` - Interval in minutes to set random wallpaper if service is enabled
-- `proxy.enabled` - Enable proxy for all requests exclude localhost, default from nekoray `http://127.0.0.1:2081`
 
 #### Aliases
 

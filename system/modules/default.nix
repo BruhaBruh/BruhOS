@@ -22,5 +22,7 @@
     ./virtualisation.nix
     ./font.nix
     ./stylix.nix
+    # COMMENT THIS IF DISK MOUNTING DOES NOT USED
+    ./diskmount.nix
   ];
 }

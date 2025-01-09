@@ -14,6 +14,8 @@
     initExtra = ''
       PROMPT="%F{green}%~%f %F{blue}%f "
       RPROMPT="%F{7}%?%f - %F{7}%T%f"
+
+      ___MY_VMOPTIONS_SHELL_FILE="''${HOME}/.jetbrains.vmoptions.sh"; if [ -f "''${___MY_VMOPTIONS_SHELL_FILE}" ]; then . "''${___MY_VMOPTIONS_SHELL_FILE}"; fi
     '';
     shellAliases = {
       sudo = "${scripts.ssudo}/bin/ssudo";
@@ -28,5 +30,12 @@
       cat = "bat";
       ls = "eza --icons=always";
     } // aliases;
+  };
+
+  programs.bash = {
+    enable = true;
+    profileExtra = ''
+      ___MY_VMOPTIONS_SHELL_FILE="''${HOME}/.jetbrains.vmoptions.sh"; if [ -f "''${___MY_VMOPTIONS_SHELL_FILE}" ]; then . "''${___MY_VMOPTIONS_SHELL_FILE}"; fi
+    '';
   };
 }

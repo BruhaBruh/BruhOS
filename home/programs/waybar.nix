@@ -39,6 +39,26 @@ let
       printf "{\"text\": \"''${text}\", \"artist\": \"''${artist}\", \"track\": \"''${track}\", \"class\": \"''${status}\", \"alt\": \"''${status}\"}\n"
     done
   '';
+  audiodata = pkgs.writeShellScriptBin "audiodata" ''
+    snore() {
+      local IFS
+      [[ -n "''${_snore_fd:-}" ]] || exec {_snore_fd}<> <(:)
+      read -r ''${1:+-t "$1"} -u $_snore_fd || :
+    }
+
+    DELAY=0.2
+
+    while snore $DELAY; do
+      current_sink=$(pactl get-default-sink)
+
+      left_volume=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}' | tr -d '%')
+      right_volume=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $12}' | tr -d '%')
+
+      mono_volume="$(( (left_volume + right_volume) / 2 ))"
+
+      printf "{\"text\": \"''${mono_volume}%%\", \"current_sink\": \"''${current_sink}\", \"class\": \"''${current_sink}\", \"alt\": \"''${current_sink}\"}\n"
+    done
+  '';
 in
 {
   programs.waybar = {
@@ -57,8 +77,8 @@ in
         margin-right = 8;
         height = 28;
 
-        modules-left = [ "custom/apps" "custom/wallpaper" "hyprland/workspaces" ];
-        modules-center = [ "hyprland/window" ];
+        modules-left = [ "custom/apps" "hyprland/workspaces" ];
+        modules-center = [ "custom/wallpaper" "hyprland/window" "custom/audio" ];
         modules-right = [ "custom/spotify-prev" "custom/spotify" "custom/spotify-next" "custom/time" "custom/date" "custom/powermenu" ];
 
         "custom/apps" = {
@@ -117,10 +137,10 @@ in
           return-type = "json";
           restart-interval = 1;
           on-click = "sp play";
+          on-click-right = "hyprctl dispatch focuswindow 'initialtitle:^(.*Spotify.*)$'";
           exec = "${spotifydata}/bin/spotifydata 2> /dev/null";
           exec-on-event = false;
         };
-
 
         "custom/spotify-next" = {
           format = "{icon}";
@@ -136,6 +156,23 @@ in
           restart-interval = 1;
           on-click = "sp next";
           exec = "${spotifydata}/bin/spotifydata 2> /dev/null";
+          exec-on-event = false;
+        };
+
+        "custom/audio" = {
+          format = "{} {icon}";
+          format-icons = {
+            "alsa_output.pci-0000_06_00.4.analog-stereo" = "";
+            "alsa_output.pci-0000_04_00.1.hdmi-stereo" = "";
+          };
+          hide-empty-text = true;
+          escape = true;
+          return-type = "json";
+          restart-interval = 1;
+          on-click = "audiocycle";
+          on-scroll-up = "audiovolume inc";
+          on-scroll-down = "audiovolume dec";
+          exec = "${audiodata}/bin/audiodata 2> /dev/null";
           exec-on-event = false;
         };
 
@@ -216,6 +253,7 @@ in
       #custom-spotify-prev,
       #custom-spotify,
       #custom-spotify-next,
+      #custom-audio,
       #custom-time,
       #custom-date,
       #custom-uptime,
@@ -393,6 +431,25 @@ in
       #custom-spotify.ad-paused,
       #custom-spotify-next.ad-paused {
         opacity: 0.5;
+      }
+
+      #custom-audio {
+        background: linear-gradient(
+          45deg,
+          @green 0%,
+          @teal 13%,
+          @green 26%,
+          @teal 34%,
+          @green 49%,
+          @teal 65%,
+          @green 77%,
+          @teal 88%,
+          @green 95%
+        );
+        color: @base;
+        background-size: 500% 500%;
+        animation: gradient 7s linear infinite;
+        padding-right: 18px;
       }
 
       #custom-time {

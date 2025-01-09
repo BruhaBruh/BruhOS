@@ -3,6 +3,7 @@
 {
   programs.git = {
     enable = true;
+    lfs.enable = true;
     extraConfig = {
       init.defaultBranch = "${vars.git.defaultBranch}";
       user.name = "${vars.git.username}";
