@@ -4,6 +4,8 @@
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
+    package = null;
+    portalPackage = null;
 
     settings = {
       "$mainMod" = "SUPER";
@@ -199,11 +201,14 @@
 
       windowrulev2 = [
         "workspace 1 silent,initialTitle:^(.*Zen Browser.*)$"
-        "workspace 2 silent,initialTitle:^(.*Visual Studio Code.*)$"
         "workspace 3 silent,initialTitle:^(.*Telegram.*)$"
+        "workspace 8 silent,initialTitle:^(.*dinodrop\\.io.*)$"
         "workspace 9 silent,initialTitle:^(.*Spotify.*)$"
+        "workspace 10 silent,initialTitle:^(.*AmneziaVPN.*)$"
         "workspace 10 silent,initialClass:^(.*nekoray.*)$"
 
+        "workspace 2 silent,initialClass:^(.*zed.Zed.*)$"
+        "workspace 2 silent,initialTitle:^(.*Visual Studio Code.*)$"
         "workspace 2 silent,class:^(.*IntelliJ.*)$"
         "float,initialTitle:^(Welcome to IntelliJ.+)$"
         "center,initialTitle:^(Welcome to IntelliJ.+)$"
@@ -213,6 +218,7 @@
         "float,initialTitle:^(Minecraft.+)$"
         "keepaspectratio,initialTitle:^(Minecraft.+)$"
         "center,initialTitle:^(Minecraft.+)$"
+
 
         "pin,initialClass:^(Rofi)$"
         "stayfocused,initialClass:^(Rofi)$"
@@ -230,10 +236,11 @@
         "${scripts.waybarstop}/bin/waybarstop"
 
         "[workspace 1 silent] zen"
-        "[workspace 2 silent] code"
         "[workspace 3 silent] telegram-desktop"
         "[workspace 9 silent] spotify"
-        "[workspace 10 silent] nekoray"
+        "[workspace 8 silent] chromium --app=\"https://dinodrop.io\" --disable-background-timer-throttling --disable-renderer-backgrounding --disable-backgrounding-occluded-windows --disable-features=TranslateUI"
+        "[workspace 10 silent] AmneziaVPN"
+        # "[workspace 10 silent] nekoray"
       ];
 
       bind = [

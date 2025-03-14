@@ -19,14 +19,16 @@
     '';
     shellAliases = {
       sudo = "${scripts.ssudo}/bin/ssudo";
-      fullClean = '' 
+      fullClean = ''
         nix-collect-garbage --delete-old
 
         sudo nix-collect-garbage -d
 
         sudo /run/current-system/bin/switch-to-configuration boot
       '';
-      rebuild = "sudo nixos-rebuild switch --flake ${vars.flakeDirectory}";
+      rebuild = ''
+        sudo nixos-rebuild switch --flake ${vars.flakeDirectory}
+      '';
       cat = "bat";
       ls = "eza --icons=always";
     } // aliases;

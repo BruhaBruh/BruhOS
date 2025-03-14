@@ -22,6 +22,8 @@ in
       rofi.enable = false;
       waybar.enable = false;
       swaync.enable = false;
+      zed.enable = false;
+      vscode.profileNames = [ "default" ];
     };
   };
 

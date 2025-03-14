@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 let
   spotifydata = pkgs.writeShellScriptBin "spotifydata" ''
@@ -160,10 +160,11 @@ in
         };
 
         "custom/audio" = {
-          format = "{} {icon}";
+          format = "{}{icon}";
           format-icons = {
-            "alsa_output.pci-0000_06_00.4.analog-stereo" = "";
-            "alsa_output.pci-0000_04_00.1.hdmi-stereo" = "";
+            "alsa_output.pci-0000_06_00.4.analog-stereo" = " ";
+            "alsa_output.usb-ARTURIA_MiniFuse_1_8831400143261746-00.Direct__Direct__sink" = " ";
+            "alsa_output.pci-0000_04_00.1.hdmi-stereo" = " ";
           };
           hide-empty-text = true;
           escape = true;
@@ -355,12 +356,12 @@ in
         background: radial-gradient(
           circle,
           @green 0%,
-          @teal 21%, 
+          @teal 21%,
           @yellow 34%,
-          @mauve 35%, 
-          @sapphire 59%, 
-          @green 74%, 
-          @lavender 74%, 
+          @mauve 35%,
+          @sapphire 59%,
+          @green 74%,
+          @lavender 74%,
           @blue 100%
         );
         background-size: 400% 400%;

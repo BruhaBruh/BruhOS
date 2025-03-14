@@ -4,9 +4,10 @@
   environment.systemPackages = with pkgs; [
     # Desktop Apps
     chromium
+    firefox
     inputs.zen-browser.packages.${system}.default
     telegram-desktop
-    vesktop
+    discord
     bitwarden-desktop
     spotify
     pkgs-stable.obs-studio
@@ -22,6 +23,10 @@
     # Docker
     docker
     docker-compose
+
+    # Bluetooth
+    bluez
+    bluez-tools
 
     # CLI
     curl
@@ -56,7 +61,6 @@
     wallust
 
     # WMs
-    hyprland
     hyprpicker
     hyprland-protocols
     hyprpaper
@@ -87,6 +91,10 @@
     pavucontrol
     playerctl
 
+    # LSP
+    # nixd
+    # nil
+
     # System Packages
     fzf
     baobab
@@ -104,8 +112,10 @@
     libinput
     xorg.xcursorthemes
     base16-schemes
+    gobject-introspection
 
     # Other
+    xorg.xvfb
     ags
     cava
     eog
@@ -114,13 +124,28 @@
     gtk-engine-murrine
     inxi
     inter
+    usbutils
   ];
 
   programs = {
+    amnezia-vpn.enable = true;
     chromium.enable = true;
     waybar.enable = true;
     git.enable = true;
     zsh.enable = true;
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        glibc
+        gcc
+        protobuf
+        grpc
+      ];
+    };
+    java = {
+      enable = true;
+      package = pkgs.jdk21_headless;
+    };
     obs-studio = {
       enable = true;
       plugins = with pkgs-stable.obs-studio-plugins; [
@@ -176,7 +201,12 @@
 
     gvfs.enable = true;
 
-    udev.enable = true;
+    udev = {
+      enable = true;
+      extraRules = ''
+        SUBSYSTEM=="usb", ATTR{idVendor}=="1ea7", ATTR{idProduct}=="9005", TEST=="power/control", ATTR{power/control}="on"
+      '';
+    };
     envfs.enable = true;
     dbus.enable = true;
 

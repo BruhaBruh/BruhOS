@@ -52,7 +52,7 @@
             home-manager.extraSpecialArgs = {
               inherit pkgs-stable vars aliases inputs system scripts;
             };
-            home-manager.useGlobalPkgs = true;
+            home-manager.useGlobalPkgs = false;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
             home-manager.users.${vars.username} = import ./home;

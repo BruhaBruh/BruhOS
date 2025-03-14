@@ -13,5 +13,6 @@
     ./bat.nix
     ./swaync.nix
     ./btop.nix
+    ./ollama.nix
   ];
 }

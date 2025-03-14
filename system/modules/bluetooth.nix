@@ -2,15 +2,15 @@
 
 {
   hardware.bluetooth = {
-    enable = false;
-    powerOnBoot = false;
+    enable = true;
+    powerOnBoot = true;
     settings = {
       General = {
-        Enable = "Source,Sink,Media,Socket";
+        Enable = "HID,Source,Sink,Media,Socket";
         Experimental = true;
       };
     };
   };
 
-  services.blueman.enable = false;
+  services.blueman.enable = true;
 }
