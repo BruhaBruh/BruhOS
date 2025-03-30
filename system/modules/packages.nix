@@ -1,7 +1,9 @@
-{ pkgs, pkgs-stable, vars, system, inputs, ... }:
+{ pkgs, pkgs-stable, pkgs-custom, vars, system, inputs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
+    pkgs-custom.reyohoho
+
     # Desktop Apps
     chromium
     firefox

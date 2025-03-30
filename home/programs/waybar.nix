@@ -103,6 +103,7 @@ in
           rewrite = {
             "NekoRay.*" = "NekoRay";
             "Spotify.*" = "Spotify";
+            "ReYohoho Desktop.*" = "ReYohoho";
           };
           separate-outputs = true;
         };

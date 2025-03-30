@@ -39,10 +39,16 @@
       };
     in
     {
+      packages.${system} = {
+        reyohoho = pkgs.callPackage ./packages/reyohoho.nix { };
+        default = self.packages.${system}.reyohoho;
+      };
+
       nixosConfigurations.${ vars.hostName} = lib.nixosSystem {
         inherit system;
         specialArgs = {
           inherit pkgs-stable vars aliases inputs system scripts;
+          pkgs-custom = self.packages.${system};
         };
         modules = [
           stylix.nixosModules.stylix
@@ -51,6 +57,7 @@
           {
             home-manager.extraSpecialArgs = {
               inherit pkgs-stable vars aliases inputs system scripts;
+              pkgs-custom = self.packages.${system};
             };
             home-manager.useGlobalPkgs = false;
             home-manager.useUserPackages = true;

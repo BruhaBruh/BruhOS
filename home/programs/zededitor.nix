@@ -22,6 +22,7 @@
       "snippets"
       "nginx"
       "0x96f"
+      "vue"
     ];
     userSettings = {
       autosave = "on_focus_change";

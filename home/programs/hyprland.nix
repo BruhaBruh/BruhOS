@@ -1,4 +1,4 @@
-{ pkgs, vars, scripts, ... }:
+{ scripts, ... }:
 
 {
   wayland.windowManager.hyprland = {
@@ -239,8 +239,8 @@
         "[workspace 3 silent] telegram-desktop"
         "[workspace 9 silent] spotify"
         "[workspace 8 silent] chromium --app=\"https://dinodrop.io\" --disable-background-timer-throttling --disable-renderer-backgrounding --disable-backgrounding-occluded-windows --disable-features=TranslateUI"
-        "[workspace 10 silent] AmneziaVPN"
-        # "[workspace 10 silent] nekoray"
+        # "[workspace 10 silent] AmneziaVPN"
+        "[workspace 10 silent] nekoray"
       ];
 
       bind = [

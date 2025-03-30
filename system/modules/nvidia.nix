@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, ... }: {
   # Specific for my pc. You can comment boot.blacklistedKernelModules
   # boot.blacklistedKernelModules = [
   #   "i2c_nvidia_gpu"
